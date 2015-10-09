@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#include "Main.h"
 
 @interface AppDelegate ()
 
@@ -15,8 +16,17 @@
 
 @implementation AppDelegate
 
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
+     shouldPresentNotification:(NSUserNotification *)notification
+{
+    return YES;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    
+    Main::main();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
