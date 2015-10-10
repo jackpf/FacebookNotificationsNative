@@ -7,13 +7,22 @@
 //
 
 #include "Main.h"
-#include "Notification.h"
 
-int Main::main()
+int Main::main(AppDelegateBridge *bridge)
 {
-    std::cout << "Notification!";
+    bridge->notify("Title", "Body");
+    bridge->notify("Another", "Hi");
     
-    Notification::notify("Title", "Body");
+    Request request;
+    Parser parser;
+    
+    try {
+        std::stringstream buffer;
+        request.request("/me", &buffer);
+        parser.parse(&buffer);
+    } catch (std::runtime_error e) {
+        cout << e.what() << std::endl;
+    }
     
     return 0;
 }

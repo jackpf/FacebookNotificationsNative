@@ -16,7 +16,7 @@
 class Notification
 {
 public:
-    static void notify(std::string, std::string);
+    void notify(std::string, std::string);
 };
 
 #endif

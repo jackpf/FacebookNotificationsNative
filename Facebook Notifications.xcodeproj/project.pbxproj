@@ -15,6 +15,10 @@
 		DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3661BE1BC7AF040000D2ED /* Main.cpp */; };
 		DD3661CB1BC7B6990000D2ED /* Notification.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD3661CA1BC7B6990000D2ED /* Notification.mm */; };
 		DD3661CD1BC7B8F40000D2ED /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3661CC1BC7B8F40000D2ED /* AppKit.framework */; };
+		DD3661D01BC7C5A40000D2ED /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3661CE1BC7C5A40000D2ED /* Parser.cpp */; };
+		DD530AE11BC7CC5D00194065 /* SystemTray.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530ADF1BC7CC5D00194065 /* SystemTray.mm */; };
+		DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */; };
+		DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD530AF61BC8FE2A00194065 /* Request.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,14 @@
 		DD3661C91BC7B66C0000D2ED /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		DD3661CA1BC7B6990000D2ED /* Notification.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Notification.mm; sourceTree = "<group>"; };
 		DD3661CC1BC7B8F40000D2ED /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		DD3661CE1BC7C5A40000D2ED /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
+		DD3661CF1BC7C5A40000D2ED /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		DD530ADF1BC7CC5D00194065 /* SystemTray.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SystemTray.mm; sourceTree = "<group>"; };
+		DD530AE01BC7CC5D00194065 /* SystemTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemTray.h; sourceTree = "<group>"; };
+		DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegateBridge.mm; sourceTree = "<group>"; };
+		DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegateBridge.h; sourceTree = "<group>"; };
+		DD530AF61BC8FE2A00194065 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
+		DD530AF71BC8FE2A00194065 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +98,14 @@
 		DD36619B1BC7AEB00000D2ED /* Facebook Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				DD3661C01BC7B0300000D2ED /* src */,
+				DD530AE21BC7D90100194065 /* Bridge */,
+				DD3661C21BC7B0520000D2ED /* Facebook */,
+				DD3661BD1BC7AEE60000D2ED /* Main.h */,
+				DD3661BE1BC7AF040000D2ED /* Main.cpp */,
 				DD36619E1BC7AEB00000D2ED /* AppDelegate.h */,
 				DD36619F1BC7AEB00000D2ED /* AppDelegate.mm */,
+				DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */,
+				DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */,
 				DD3661A31BC7AEB00000D2ED /* Images.xcassets */,
 				DD3661A51BC7AEB00000D2ED /* MainMenu.xib */,
 				DD36619C1BC7AEB00000D2ED /* Supporting Files */,
@@ -122,31 +139,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DD3661C01BC7B0300000D2ED /* src */ = {
+		DD3661C21BC7B0520000D2ED /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				DD3661C21BC7B0520000D2ED /* Facebook */,
-				DD3661C11BC7B0490000D2ED /* Cocoa */,
-				DD3661BE1BC7AF040000D2ED /* Main.cpp */,
-				DD3661BD1BC7AEE60000D2ED /* Main.h */,
+				DD3661CE1BC7C5A40000D2ED /* Parser.cpp */,
+				DD3661CF1BC7C5A40000D2ED /* Parser.h */,
+				DD530AF61BC8FE2A00194065 /* Request.cpp */,
+				DD530AF71BC8FE2A00194065 /* Request.h */,
 			);
-			name = src;
+			name = Facebook;
 			sourceTree = "<group>";
 		};
-		DD3661C11BC7B0490000D2ED /* Cocoa */ = {
+		DD530AE21BC7D90100194065 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
 				DD3661C91BC7B66C0000D2ED /* Notification.h */,
 				DD3661CA1BC7B6990000D2ED /* Notification.mm */,
+				DD530ADF1BC7CC5D00194065 /* SystemTray.mm */,
+				DD530AE01BC7CC5D00194065 /* SystemTray.h */,
 			);
-			name = Cocoa;
-			sourceTree = "<group>";
-		};
-		DD3661C21BC7B0520000D2ED /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Facebook;
+			name = Bridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +262,11 @@
 			files = (
 				DD3661CB1BC7B6990000D2ED /* Notification.mm in Sources */,
 				DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */,
+				DD530AE11BC7CC5D00194065 /* SystemTray.mm in Sources */,
+				DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */,
 				DD3661A21BC7AEB00000D2ED /* main.m in Sources */,
+				DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */,
+				DD3661D01BC7C5A40000D2ED /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,6 +388,19 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = "Facebook Notifications/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/lib,
+				);
+				OTHER_CFLAGS = (
+					"-I/usr/local/include",
+					"-I/usr/include",
+					"-lstdc++",
+				);
+				OTHER_LDFLAGS = (
+					"-lcurl",
+					"-lboost_system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -384,6 +413,19 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				INFOPLIST_FILE = "Facebook Notifications/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/lib,
+				);
+				OTHER_CFLAGS = (
+					"-I/usr/local/include",
+					"-I/usr/include",
+					"-lstdc++",
+				);
+				OTHER_LDFLAGS = (
+					"-lcurl",
+					"-lboost_system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -443,6 +485,7 @@
 				DD3661B81BC7AEB00000D2ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DD3661B91BC7AEB00000D2ED /* Build configuration list for PBXNativeTarget "Facebook NotificationsTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +494,7 @@
 				DD3661BB1BC7AEB00000D2ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
