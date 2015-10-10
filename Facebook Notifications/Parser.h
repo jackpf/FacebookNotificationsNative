@@ -13,6 +13,7 @@
 #include <exception>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/foreach.hpp>
 #include "Request.h"
@@ -23,7 +24,8 @@ private:
     void parseJson(std::stringstream *, boost::property_tree::ptree *) throw(std::runtime_error);
     
 public:
-    typedef std::vector<std::vector<std::pair<std::string, std::string>>> Notifications;
+    typedef std::vector<std::pair<std::string, std::string>> Notification;
+    typedef std::vector<Notification> Notifications;
     
     void parseNotifications(std::stringstream *, Notifications *) throw(std::runtime_error);
 };

@@ -10,16 +10,33 @@
 
 int Main::main(AppDelegateBridge *bridge)
 {
-    bridge->notify("Title", "Body");
-    bridge->notify("Another", "Hi");
-    
     Request request("CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR");
     Parser parser;
     
     try {
         std::stringstream buffer;
         request.request("/me/notifications", &buffer);
-        parser.parse(&buffer);
+        
+        Parser::Notifications notifications;
+        parser.parseNotifications(&buffer, &notifications);
+        
+        for(Parser::Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
+            Parser::Notification notification = static_cast<Parser::Notification>(*it);
+            
+            std::string title, body;
+            
+            for(Parser::Notification::iterator it2 = notification.begin(); it2 != notification.end(); ++it2) {
+                std::pair<std::string, std::string> pv = static_cast<std::pair<std::string, std::string>>(*it2);
+                
+                if (strcmp(pv.first.data(), "id") == 0) {
+                    title = pv.second.data();
+                } else if(strcmp(pv.first.data(), "title") == 0) {
+                    body = pv.second.data();
+                }
+            }
+            
+            bridge->notify(title, body);
+        }
     } catch (std::runtime_error e) {
         cout << "Caught exception: " << e.what() << std::endl;
     }
