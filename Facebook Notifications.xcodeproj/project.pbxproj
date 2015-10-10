@@ -142,10 +142,10 @@
 		DD3661C21BC7B0520000D2ED /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
-				DD3661CE1BC7C5A40000D2ED /* Parser.cpp */,
 				DD3661CF1BC7C5A40000D2ED /* Parser.h */,
-				DD530AF61BC8FE2A00194065 /* Request.cpp */,
+				DD3661CE1BC7C5A40000D2ED /* Parser.cpp */,
 				DD530AF71BC8FE2A00194065 /* Request.h */,
+				DD530AF61BC8FE2A00194065 /* Request.cpp */,
 			);
 			name = Facebook;
 			sourceTree = "<group>";

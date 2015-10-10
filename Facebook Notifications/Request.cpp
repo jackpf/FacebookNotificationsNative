@@ -16,6 +16,11 @@ static size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdat
     return size * nmemb;
 }
 
+Request::Request(std::string accessToken)
+{
+    this->accessToken = accessToken;
+}
+
 void Request::request(const std::string path, std::ostream *response) throw(std::runtime_error)
 {
     CURL *ch;
@@ -25,7 +30,7 @@ void Request::request(const std::string path, std::ostream *response) throw(std:
         throw std::runtime_error("Request: Unable to initialise curl");
     }
     
-    std::string url = BASE_URL + path;
+    std::string url = BASE_URL + path + "?access_token=" + accessToken;
     
     curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(ch, CURLOPT_WRITEDATA, response);

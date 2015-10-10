@@ -18,9 +18,12 @@
 class Request
 {
 private:
-    const std::string BASE_URL = "http://graph.facebook.com";
+    const std::string BASE_URL = "https://graph.facebook.com";
+    
+    std::string accessToken;
     
 public:
+    Request(std::string);
     void request(const std::string, std::ostream *) throw(std::runtime_error);
 };
 

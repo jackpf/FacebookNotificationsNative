@@ -13,15 +13,15 @@ int Main::main(AppDelegateBridge *bridge)
     bridge->notify("Title", "Body");
     bridge->notify("Another", "Hi");
     
-    Request request;
+    Request request("CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR");
     Parser parser;
     
     try {
         std::stringstream buffer;
-        request.request("/me", &buffer);
+        request.request("/me/notifications", &buffer);
         parser.parse(&buffer);
     } catch (std::runtime_error e) {
-        cout << e.what() << std::endl;
+        cout << "Caught exception: " << e.what() << std::endl;
     }
     
     return 0;
