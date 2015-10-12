@@ -12,7 +12,12 @@ int Main::main(AppDelegateBridge *bridge)
 {
     bridge->initialise();
     
-    std::string accessToken = bridge->getInput("Access token:");
+    //std::string accessToken = bridge->getInput("Access token:");
+    std::string accessToken = "CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR";
+    
+    if (accessToken.compare("") == 0) {
+        throw std::runtime_error("Empty access token");
+    }
     
     Request request(accessToken);
     Parser parser;
@@ -22,8 +27,8 @@ int Main::main(AppDelegateBridge *bridge)
         Parser::Notifications notifications;
         
         request.request("/me/notifications", &buffer);
-        
         parser.parseNotifications(&buffer, &notifications);
+        cout << "Found " << notifications.size() << " notifications" << std::endl;
         
         for(Parser::Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
             Parser::Notification notification = static_cast<Parser::Notification>(*it);

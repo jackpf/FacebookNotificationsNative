@@ -20,7 +20,7 @@
     // Insert code here to initialize your application
     AppDelegateBridge *bridge = new AppDelegateBridge([AppDelegateBridgeNative alloc]);
     Main::main(bridge);
-    delete bridge;
+    //delete bridge;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
