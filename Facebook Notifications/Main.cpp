@@ -10,14 +10,17 @@
 
 int Main::main(AppDelegateBridge *bridge)
 {
-    Request request("CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR");
+    std::string accessToken = bridge->getInput("Access token:");
+    
+    Request request(accessToken);
     Parser parser;
     
     try {
         std::stringstream buffer;
+        Parser::Notifications notifications;
+        
         request.request("/me/notifications", &buffer);
         
-        Parser::Notifications notifications;
         parser.parseNotifications(&buffer, &notifications);
         
         for(Parser::Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {

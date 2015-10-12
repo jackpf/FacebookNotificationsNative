@@ -10,11 +10,13 @@
 #define Facebook_Notifications_AppDelegateBridge_h
 
 #import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 #include <iostream>
 
 @interface AppDelegateBridgeNative : NSObject
 
--(void) notify:(NSString *)title :(NSString *)body;
+-(void) notify: (NSString *)title :(NSString *)body;
+- (NSString *) getInput: (NSString *)prompt defaultValue: (NSString *)defaultValue;
 
 @end
 
@@ -27,6 +29,7 @@ public:
     AppDelegateBridge(AppDelegateBridgeNative *);
     
     void notify(std::string, std::string);
+    std::string getInput(std::string);
 };
 
 #endif
