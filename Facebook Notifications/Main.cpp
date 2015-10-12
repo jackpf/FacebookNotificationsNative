@@ -10,6 +10,8 @@
 
 int Main::main(AppDelegateBridge *bridge)
 {
+    bridge->initialise();
+    
     std::string accessToken = bridge->getInput("Access token:");
     
     Request request(accessToken);

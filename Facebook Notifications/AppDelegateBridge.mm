@@ -10,6 +10,17 @@
 
 @implementation AppDelegateBridgeNative
 
+-(void) initialise
+{
+    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    
+    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+    //self.statusBar.title = @"F";
+    self.statusBar.image = [NSImage imageNamed:@"notification_light"];
+    self.statusBar.menu = self.statusMenu;
+    self.statusBar.highlightMode = YES;
+}
+
 -(void)notify:(NSString *) title :(NSString *)body;
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
@@ -49,6 +60,11 @@
 AppDelegateBridge::AppDelegateBridge(AppDelegateBridgeNative *bridge)
 {
     this->bridge = bridge;
+}
+
+void AppDelegateBridge::initialise()
+{
+    [bridge initialise];
 }
 
 void AppDelegateBridge::notify(std::string title, std::string body)

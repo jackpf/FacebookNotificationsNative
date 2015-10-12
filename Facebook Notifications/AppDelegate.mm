@@ -18,14 +18,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-    
-    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    //self.statusBar.title = @"F";
-    self.statusBar.image = [NSImage imageNamed:@"notification_light"];
-    self.statusBar.menu = self.statusMenu;
-    self.statusBar.highlightMode = YES;
-    
     AppDelegateBridge *bridge = new AppDelegateBridge([AppDelegateBridgeNative alloc]);
     Main::main(bridge);
     delete bridge;

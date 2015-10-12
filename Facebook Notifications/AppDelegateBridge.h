@@ -13,8 +13,12 @@
 #import <AppKit/AppKit.h>
 #include <iostream>
 
-@interface AppDelegateBridgeNative : NSObject
+@interface AppDelegateBridgeNative : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
 
+@property (strong, nonatomic) IBOutlet NSMenu *statusMenu;
+@property (strong, nonatomic) NSStatusItem *statusBar;
+
+-(void) initialise;
 -(void) notify: (NSString *)title :(NSString *)body;
 - (NSString *) getInput: (NSString *)prompt defaultValue: (NSString *)defaultValue;
 
@@ -28,6 +32,7 @@ private:
 public:
     AppDelegateBridge(AppDelegateBridgeNative *);
     
+    void initialise();
     void notify(std::string, std::string);
     std::string getInput(std::string);
 };
