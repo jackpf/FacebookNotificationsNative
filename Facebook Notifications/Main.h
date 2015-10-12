@@ -9,13 +9,14 @@
 #ifndef Facebook_Notifications_Main_h
 #define Facebook_Notifications_Main_h
 
+#include <thread>
 #include "AppDelegateBridge.h"
 #include "Parser.h"
 
 class Main
 {
 public:
-    static int main(AppDelegateBridge *wrapper);
+    static int main(AppDelegateBridge *);
 };
 
 #endif

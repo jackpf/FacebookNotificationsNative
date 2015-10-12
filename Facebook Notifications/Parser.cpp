@@ -28,7 +28,14 @@ void Parser::parseNotifications(std::stringstream *json, Notifications *data) th
         Notification notification;
         
         BOOST_FOREACH(boost::property_tree::ptree::value_type &v2, v.second) {
-            std::pair<std::string, std::string> pv(v2.first.data(), v2.second.data());
+            std::pair<std::string, std::string> pv;
+            
+            if (strcmp(v2.first.data(), "from") == 0 || strcmp(v2.first.data(), "to") == 0) {
+                pv = std::make_pair(v2.first.data(), v2.second.get_child("id").data());
+            } else {
+                pv = std::make_pair(v2.first.data(), v2.second.data());
+            }
+            
             notification.push_back(pv);
         }
         

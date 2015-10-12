@@ -10,15 +10,14 @@
 
 @implementation AppDelegate
 
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
-     shouldPresentNotification:(NSUserNotification *)notification
-{
-    return YES;
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    AppDelegateBridge *bridge = new AppDelegateBridge([AppDelegateBridgeNative alloc]);
+    [self performSelectorInBackground:@selector(run:) withObject:[[AppDelegateBridgeNative alloc] init]];
+    //[self run:[[AppDelegateBridgeNative alloc] init]];
+}
+
+- (void)run:(AppDelegateBridgeNative *) nativeBridge {
+    AppDelegateBridge *bridge = new AppDelegateBridge(nativeBridge);
     Main::main(bridge);
     //delete bridge;
 }

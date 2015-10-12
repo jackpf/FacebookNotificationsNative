@@ -10,8 +10,6 @@
 
 int Main::main(AppDelegateBridge *bridge)
 {
-    bridge->initialise();
-    
     //std::string accessToken = bridge->getInput("Access token:");
     std::string accessToken = "CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR";
     
@@ -32,17 +30,17 @@ int Main::main(AppDelegateBridge *bridge)
             Notifications newNotifications = notifications.getNew();
             
             cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
-        
+            
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
-            
+                
                 bridge->notify(notification.get("id"), notification.get("title"));
             }
             
             sleep(10);
         }
     } catch (std::runtime_error e) {
-        cout << "Caught exception: " << e.what() << std::endl;
+        std::cout << "Caught exception: " << e.what() << std::endl;
     }
     
     return 0;
