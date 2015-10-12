@@ -19,6 +19,8 @@
 		DD530AE11BC7CC5D00194065 /* SystemTray.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530ADF1BC7CC5D00194065 /* SystemTray.mm */; };
 		DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */; };
 		DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD530AF61BC8FE2A00194065 /* Request.cpp */; };
+		DD9AB97C1BCBB02100AE6B38 /* Notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB97A1BCBB02100AE6B38 /* Notifications.cpp */; };
+		DD9AB9811BCBBA1B00AE6B38 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +46,7 @@
 		DD3661B21BC7AEB00000D2ED /* Facebook_NotificationsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Facebook_NotificationsTests.m; sourceTree = "<group>"; };
 		DD3661BD1BC7AEE60000D2ED /* Main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Main.h; sourceTree = "<group>"; };
 		DD3661BE1BC7AF040000D2ED /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
-		DD3661C91BC7B66C0000D2ED /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		DD3661C91BC7B66C0000D2ED /* Notification_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification_.h; sourceTree = "<group>"; };
 		DD3661CA1BC7B6990000D2ED /* Notification.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Notification.mm; sourceTree = "<group>"; };
 		DD3661CC1BC7B8F40000D2ED /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DD3661CE1BC7C5A40000D2ED /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
@@ -55,6 +57,10 @@
 		DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegateBridge.h; sourceTree = "<group>"; };
 		DD530AF61BC8FE2A00194065 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
 		DD530AF71BC8FE2A00194065 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		DD9AB97A1BCBB02100AE6B38 /* Notifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notifications.cpp; sourceTree = "<group>"; };
+		DD9AB97B1BCBB02100AE6B38 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notification.cpp; sourceTree = "<group>"; };
+		DD9AB9801BCBBA1B00AE6B38 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +152,10 @@
 				DD3661CE1BC7C5A40000D2ED /* Parser.cpp */,
 				DD530AF71BC8FE2A00194065 /* Request.h */,
 				DD530AF61BC8FE2A00194065 /* Request.cpp */,
+				DD9AB9801BCBBA1B00AE6B38 /* Notification.h */,
+				DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */,
+				DD9AB97B1BCBB02100AE6B38 /* Notifications.h */,
+				DD9AB97A1BCBB02100AE6B38 /* Notifications.cpp */,
 			);
 			name = Facebook;
 			sourceTree = "<group>";
@@ -153,7 +163,7 @@
 		DD530AE21BC7D90100194065 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				DD3661C91BC7B66C0000D2ED /* Notification.h */,
+				DD3661C91BC7B66C0000D2ED /* Notification_.h */,
 				DD3661CA1BC7B6990000D2ED /* Notification.mm */,
 				DD530ADF1BC7CC5D00194065 /* SystemTray.mm */,
 				DD530AE01BC7CC5D00194065 /* SystemTray.h */,
@@ -262,10 +272,12 @@
 			files = (
 				DD3661CB1BC7B6990000D2ED /* Notification.mm in Sources */,
 				DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */,
+				DD9AB9811BCBBA1B00AE6B38 /* Notification.cpp in Sources */,
 				DD530AE11BC7CC5D00194065 /* SystemTray.mm in Sources */,
 				DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */,
 				DD3661A21BC7AEB00000D2ED /* main.m in Sources */,
 				DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */,
+				DD9AB97C1BCBB02100AE6B38 /* Notifications.cpp in Sources */,
 				DD3661D01BC7C5A40000D2ED /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
 			);

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jack Farrelly. All rights reserved.
 //
 
-#import "Notification.h"
+#import "Notification_.h"
 
 void Notification::notify(std::string title, std::string body)
 {

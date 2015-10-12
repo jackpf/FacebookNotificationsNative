@@ -17,13 +17,15 @@ void Parser::parseJson(std::stringstream *json, boost::property_tree::ptree *pt)
     }
 }
 
-void Parser::parseNotifications(std::stringstream *json, Parser::Notifications *data) throw(std::runtime_error)
+void Parser::parseNotifications(std::stringstream *json, Notifications *data) throw(std::runtime_error)
 {
     boost::property_tree::ptree pt;
     parseJson(json, &pt);
     
+    data->reset();
+    
     BOOST_FOREACH(boost::property_tree::ptree::value_type &v, pt.get_child("data")) {
-        std::vector<std::pair<std::string, std::string>> notification;
+        Notification notification;
         
         BOOST_FOREACH(boost::property_tree::ptree::value_type &v2, v.second) {
             std::pair<std::string, std::string> pv(v2.first.data(), v2.second.data());

@@ -17,6 +17,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/foreach.hpp>
 #include "Request.h"
+#include "Notifications.h"
 
 class Parser
 {
@@ -24,9 +25,6 @@ private:
     void parseJson(std::stringstream *, boost::property_tree::ptree *) throw(std::runtime_error);
     
 public:
-    typedef std::vector<std::pair<std::string, std::string>> Notification;
-    typedef std::vector<Notification> Notifications;
-    
     void parseNotifications(std::stringstream *, Notifications *) throw(std::runtime_error);
 };
 

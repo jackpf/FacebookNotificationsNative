@@ -2,21 +2,20 @@
 //  Notification.h
 //  Facebook Notifications
 //
-//  Created by Jack Farrelly on 09/10/2015.
+//  Created by Jack Farrelly on 12/10/2015.
 //  Copyright (c) 2015 Jack Farrelly. All rights reserved.
 //
 
-#ifndef Facebook_Notifications_Notification_h
-#define Facebook_Notifications_Notification_h
+#ifndef __Facebook_Notifications__Notification__
+#define __Facebook_Notifications__Notification__
 
-#import <Foundation/Foundation.h>
-#import <Cocoa/Cocoa.h>
 #include <iostream>
+#include <vector>
 
-class Notification
+class Notification : public std::vector<std::pair<std::string, std::string>>
 {
 public:
-    void notify(std::string, std::string);
+    std::string get(std::string);
 };
 
-#endif
+#endif /* defined(__Facebook_Notifications__Notification__) */
