@@ -15,11 +15,6 @@ void Notifications::reset()
     clear();
 }
 
-bool Notifications::hasNew()
-{
-    return false;
-}
-
 bool Notifications::containsNotification(Notification notificationToFind)
 {
     for(iterator it = begin(); it != end(); ++it) {

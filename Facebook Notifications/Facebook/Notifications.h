@@ -20,7 +20,6 @@ private:
     
 public:
     void reset();
-    bool hasNew();
     bool containsNotification(Notification);
     Notifications getNew();
 };

@@ -51,7 +51,7 @@
 		DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegateBridge.mm; sourceTree = "<group>"; };
 		DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegateBridge.h; sourceTree = "<group>"; };
 		DD9AB9861BCD5DE500AE6B38 /* Notification.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Notification.mm; sourceTree = "<group>"; };
-		DD9AB9871BCD5DE500AE6B38 /* Notification_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification_.h; sourceTree = "<group>"; };
+		DD9AB9871BCD5DE500AE6B38 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		DD9AB9881BCD5DE500AE6B38 /* SystemTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemTray.h; sourceTree = "<group>"; };
 		DD9AB9891BCD5DE500AE6B38 /* SystemTray.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SystemTray.mm; sourceTree = "<group>"; };
 		DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageCache.cpp; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				DD9AB9861BCD5DE500AE6B38 /* Notification.mm */,
-				DD9AB9871BCD5DE500AE6B38 /* Notification_.h */,
+				DD9AB9871BCD5DE500AE6B38 /* Notification.h */,
 				DD9AB9881BCD5DE500AE6B38 /* SystemTray.h */,
 				DD9AB9891BCD5DE500AE6B38 /* SystemTray.mm */,
 			);
