@@ -8,8 +8,33 @@
 
 #include "Main.h"
 
+AppDelegateBridge *Main::bridge;
+Request *Main::request;
+Parser *Main::parser;
+Notifications Main::notifications;
+
+void Main::markNotificationsRead(void *data)
+{
+    int i = 0;
+    
+    for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
+        Notification notification = static_cast<Notification>(*it);
+        
+        request->request("/" + notification.get("id"), std::vector<std::string>{"unread=false"}, true, nullptr);
+        i++;
+    }
+    
+    notifications.reset();
+    bridge->setNotificationCount(0);
+    
+    std::cout << "Marked " << i << " notifications as read" << std::endl;
+}
+
 int Main::main(AppDelegateBridge *bridge)
 {
+    Main::bridge = bridge;
+    bridge->addEvent("markNotificationsRead", &markNotificationsRead);
+    
     //std::string accessToken = bridge->getInput("Access token:");
     std::string accessToken = "CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR";
     
@@ -17,17 +42,16 @@ int Main::main(AppDelegateBridge *bridge)
         throw std::runtime_error("Empty access token");
     }
     
-    Request request(accessToken);
-    Parser parser;
-    ImageCache cache(&request);
+    request = new Request(accessToken);
+    parser = new Parser;
+    ImageCache cache(request);
     
     try {
         std::stringstream buffer;
-        Notifications notifications;
         
         while (true) {
-            request.request("/me/notifications", &buffer);
-            parser.parseNotifications(&buffer, &notifications);
+            request->request("/me/notifications", &buffer);
+            parser->parseNotifications(&buffer, &notifications);
             Notifications newNotifications = notifications.getNew();
             
             cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
@@ -40,11 +64,14 @@ int Main::main(AppDelegateBridge *bridge)
                 bridge->notify(notification.get("id"), notification.get("title"), cache.fetch(notification.get("from")));
             }
             
-            sleep(60);
+            sleep(10);
         }
     } catch (std::runtime_error e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
     }
+    
+    delete request;
+    delete parser;
     
     return 0;
 }

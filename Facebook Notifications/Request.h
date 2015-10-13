@@ -13,6 +13,7 @@
 #include <iostream>
 #include <exception>
 #include <sstream>
+#include <vector>
 #include "curlcpp/curl_easy.h"
 
 class Request
@@ -24,6 +25,7 @@ private:
     
 public:
     Request(std::string);
+    void request(const std::string, std::vector<std::string>, bool, std::ostream *) throw(std::runtime_error);
     void request(const std::string, std::ostream *) throw(std::runtime_error);
 };
 

@@ -12,6 +12,8 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #include <iostream>
+#include <unordered_map>
+#include <thread>
 
 class AppDelegateBridge;
 
@@ -19,6 +21,9 @@ class AppDelegateBridge;
 
 @property (nonatomic) AppDelegateBridge *bridge;
 @property (strong, nonatomic) NSStatusItem *statusBar;
+@property (nonatomic) NSZone *menuZone;
+@property (strong, nonatomic) NSMenu *menu;
+@property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *exitMenuItem;
 
 - (AppDelegateBridgeNative *) init;
 - (void) setNotificationCount :(int)count;
@@ -35,11 +40,17 @@ private:
     AppDelegateBridgeNative *bridge;
     
 public:
+    typedef void (EventCallback)(void *);
+    std::unordered_map<std::string, EventCallback *> callbacks;
+    
     void setBridge(AppDelegateBridgeNative *);
     void setNotificationCount(int);
     void notify(std::string, std::string, std::string = "");
     std::string getInput(std::string);
-    void markNotificationsRead();
+    
+    void addEvent(std::string, EventCallback);
+    void removeEvent(std::string);
+    void event(std::string, void * = NULL);
 };
 
 #endif

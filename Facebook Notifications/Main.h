@@ -16,8 +16,16 @@
 
 class Main
 {
+private:
+    static AppDelegateBridge *bridge;
+    static Request *request;
+    static Parser *parser;
+    static Notifications notifications;
+    
 public:
     static int main(AppDelegateBridge *);
+    
+    static void markNotificationsRead(void *);
 };
 
 #endif

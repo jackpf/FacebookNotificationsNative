@@ -16,7 +16,7 @@
 }
 
 - (void)run {
-    AppDelegateBridgeNative * nativeBridge = [[AppDelegateBridgeNative alloc] init];
+    AppDelegateBridgeNative *nativeBridge = [[AppDelegateBridgeNative alloc] init];
     AppDelegateBridge *bridge = new AppDelegateBridge;
     
     [nativeBridge setBridge:bridge];
@@ -24,6 +24,7 @@
     
     Main::main(bridge);
     
+    //delete nativeBridge;
     //delete bridge;
 }
 

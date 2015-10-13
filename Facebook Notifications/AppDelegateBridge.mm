@@ -20,6 +20,11 @@
     return YES;
 }
 
+- (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+    printf("NOTIFICATION!\n");
+}
+
 - (AppDelegateBridgeNative *) init
 {
     if (self = [super init]) {
@@ -30,23 +35,24 @@
         self.statusBar.alternateImage =[NSImage imageNamed:@"notification_alt"];
         self.statusBar.highlightMode = YES;
         
-        NSZone *menuZone = [NSMenu menuZone];
-        NSMenu *menu = [[NSMenu allocWithZone:menuZone] init];
-        NSMenuItem *menuItem;
+        self.menuZone = [NSMenu menuZone];
+        self.menu = [[NSMenu allocWithZone:self.menuZone] init];
+        [self.menu setAutoenablesItems:NO];
     
-        menuItem = [menu addItemWithTitle:@"Mark all as read"
+        self.markNotificationsReadMenuItem = [self.menu addItemWithTitle:@"Mark all as read"
                                     action:@selector(markNotificationsRead)
                                     keyEquivalent:@""];
-        [menuItem setTarget:self];
+        self.markNotificationsReadMenuItem.enabled = false;
+        [self.markNotificationsReadMenuItem setTarget:self];
     
-        [menu addItem:[NSMenuItem separatorItem]];
+        [self.menu addItem:[NSMenuItem separatorItem]];
     
-        menuItem = [menu addItemWithTitle:@"Exit"
+        self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
                                action:@selector(exit)
                         keyEquivalent:@""];
-        [menuItem setTarget:self];
+        [self.exitMenuItem setTarget:self];
     
-        self.statusBar.menu = menu;
+        self.statusBar.menu = self.menu;
     }
     
     return self;
@@ -56,8 +62,10 @@
 {
     if (count > 0) {
         self.statusBar.image = [NSImage imageNamed:@"notification_dark"];
+        self.markNotificationsReadMenuItem.enabled = YES;
     } else {
         self.statusBar.image = [NSImage imageNamed:@"notification_light"];
+        self.markNotificationsReadMenuItem.enabled = NO;
     }
     
     self.statusBar.toolTip = [NSString stringWithFormat:@"%d notifications", count];
@@ -99,7 +107,7 @@
 
 - (void) markNotificationsRead
 {
-    self.bridge->markNotificationsRead();
+    self.bridge->event("markNotificationsRead");
 }
 
 - (void) exit
@@ -129,7 +137,17 @@ std::string AppDelegateBridge::getInput(std::string prompt)
     return [[bridge getInput:[NSString stringWithUTF8String:prompt.c_str()]] UTF8String];
 }
 
-void AppDelegateBridge::markNotificationsRead()
+void AppDelegateBridge::addEvent(std::string eventName, EventCallback *callback)
 {
-    std::cout<<"BLAH!";
+    callbacks[eventName] = callback;
+}
+
+void AppDelegateBridge::removeEvent(std::string eventName)
+{
+    callbacks[eventName] = NULL;
+}
+
+void AppDelegateBridge::event(std::string eventName, void *data)
+{
+    std::thread t(callbacks[eventName], data);
 }

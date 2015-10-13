@@ -10,6 +10,7 @@
 
 void Notifications::reset()
 {
+    delete oldNotifications;
     oldNotifications = new Notifications(*this);
     clear();
 }
