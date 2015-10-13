@@ -13,15 +13,19 @@
 #import <AppKit/AppKit.h>
 #include <iostream>
 
+class AppDelegateBridge;
+
 @interface AppDelegateBridgeNative : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
 
+@property (nonatomic) AppDelegateBridge *bridge;
 @property (strong, nonatomic) NSStatusItem *statusBar;
 
--(AppDelegateBridgeNative *) init;
--(void) setNotificationCount: (int)count;
--(void) notify: (NSString *)title :(NSString *)body :(NSString *)image;
--(NSString *) getInput: (NSString *)prompt defaultValue: (NSString *)defaultValue;
--(void) exit;
+- (AppDelegateBridgeNative *) init;
+- (void) setNotificationCount :(int)count;
+- (void) notify :(NSString *)title :(NSString *)body :(NSString *)image;
+- (NSString *) getInput :(NSString *)prompt :(NSString *)defaultValue;
+- (void) markNotificationsRead;
+- (void) exit;
 
 @end
 
@@ -31,11 +35,11 @@ private:
     AppDelegateBridgeNative *bridge;
     
 public:
-    AppDelegateBridge(AppDelegateBridgeNative *);
-    
+    void setBridge(AppDelegateBridgeNative *);
     void setNotificationCount(int);
     void notify(std::string, std::string, std::string = "");
     std::string getInput(std::string);
+    void markNotificationsRead();
 };
 
 #endif

@@ -14,43 +14,45 @@
 
 @implementation AppDelegateBridgeNative
 
-- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
+- (BOOL) userNotificationCenter :(NSUserNotificationCenter *)center
      shouldPresentNotification:(NSUserNotification *)notification
 {
     return YES;
 }
 
--(AppDelegateBridgeNative *) init
+- (AppDelegateBridgeNative *) init
 {
-    [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+    if (self = [super init]) {
+        [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
-    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    self.statusBar.image = [NSImage imageNamed:@"notification_light"];
-    self.statusBar.alternateImage =[NSImage imageNamed:@"notification_alt"];
-    self.statusBar.highlightMode = YES;
+        self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        self.statusBar.image = [NSImage imageNamed:@"notification_light"];
+        self.statusBar.alternateImage =[NSImage imageNamed:@"notification_alt"];
+        self.statusBar.highlightMode = YES;
+        
+        NSZone *menuZone = [NSMenu menuZone];
+        NSMenu *menu = [[NSMenu allocWithZone:menuZone] init];
+        NSMenuItem *menuItem;
     
-    NSZone *menuZone = [NSMenu menuZone];
-    NSMenu *menu = [[NSMenu allocWithZone:menuZone] init];
-    NSMenuItem *menuItem;
-    
-    menuItem = [menu addItemWithTitle:@"Mark all as read"
-                                    action:@selector(markAllAsRead:)
+        menuItem = [menu addItemWithTitle:@"Mark all as read"
+                                    action:@selector(markNotificationsRead)
                                     keyEquivalent:@""];
-    [menuItem setTarget:self];
+        [menuItem setTarget:self];
     
-    [menu addItem:[NSMenuItem separatorItem]];
+        [menu addItem:[NSMenuItem separatorItem]];
     
-    menuItem = [menu addItemWithTitle:@"Exit"
+        menuItem = [menu addItemWithTitle:@"Exit"
                                action:@selector(exit)
                         keyEquivalent:@""];
-    [menuItem setTarget:self];
+        [menuItem setTarget:self];
     
-    self.statusBar.menu = menu;
+        self.statusBar.menu = menu;
+    }
     
     return self;
 }
 
--(void)setNotificationCount:(int)count
+- (void) setNotificationCount :(int) count
 {
     if (count > 0) {
         self.statusBar.image = [NSImage imageNamed:@"notification_dark"];
@@ -61,7 +63,7 @@
     self.statusBar.toolTip = [NSString stringWithFormat:@"%d notifications", count];
 }
 
--(void)notify:(NSString *)title :(NSString *)body :(NSString *)image;
+- (void) notify :(NSString *) title :(NSString *) body :(NSString *) image;
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
@@ -71,13 +73,13 @@
     [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
--(NSString *)getInput: (NSString *)prompt
+- (NSString *) getInput :(NSString *) prompt
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
-                                     defaultButton:@"OK"
-                                   alternateButton:@"Cancel"
-                                       otherButton:nil
-                         informativeTextWithFormat:@""];
+                                defaultButton:@"OK"
+                                alternateButton:@"Cancel"
+                                otherButton:nil
+                                informativeTextWithFormat:@""];
     
     NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
     //[input setStringValue:defaultValue];
@@ -95,14 +97,19 @@
     }
 }
 
--(void) exit
+- (void) markNotificationsRead
+{
+    self.bridge->markNotificationsRead();
+}
+
+- (void) exit
 {
     [[NSApplication sharedApplication] terminate:nil];
 }
 
 @end
 
-AppDelegateBridge::AppDelegateBridge(AppDelegateBridgeNative *bridge)
+void AppDelegateBridge::setBridge(AppDelegateBridgeNative *bridge)
 {
     this->bridge = bridge;
 }
@@ -120,4 +127,9 @@ void AppDelegateBridge::setNotificationCount(int count)
 std::string AppDelegateBridge::getInput(std::string prompt)
 {
     return [[bridge getInput:[NSString stringWithUTF8String:prompt.c_str()]] UTF8String];
+}
+
+void AppDelegateBridge::markNotificationsRead()
+{
+    std::cout<<"BLAH!";
 }

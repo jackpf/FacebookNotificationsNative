@@ -12,13 +12,18 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    [self performSelectorInBackground:@selector(run:) withObject:[[AppDelegateBridgeNative alloc] init]];
-    //[self run:[[AppDelegateBridgeNative alloc] init]];
+    [self performSelectorInBackground:@selector(run) withObject:nil];
 }
 
-- (void)run:(AppDelegateBridgeNative *) nativeBridge {
-    AppDelegateBridge *bridge = new AppDelegateBridge(nativeBridge);
+- (void)run {
+    AppDelegateBridgeNative * nativeBridge = [[AppDelegateBridgeNative alloc] init];
+    AppDelegateBridge *bridge = new AppDelegateBridge;
+    
+    [nativeBridge setBridge:bridge];
+    bridge->setBridge(nativeBridge);
+    
     Main::main(bridge);
+    
     //delete bridge;
 }
 
