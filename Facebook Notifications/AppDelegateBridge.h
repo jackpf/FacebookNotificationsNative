@@ -15,12 +15,13 @@
 
 @interface AppDelegateBridgeNative : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
 
-@property (strong, nonatomic) IBOutlet NSMenu *statusMenu;
 @property (strong, nonatomic) NSStatusItem *statusBar;
 
 -(AppDelegateBridgeNative *) init;
--(void) notify: (NSString *)title :(NSString *)body;
-- (NSString *) getInput: (NSString *)prompt defaultValue: (NSString *)defaultValue;
+-(void) setNotificationCount: (int)count;
+-(void) notify: (NSString *)title :(NSString *)body :(NSString *)image;
+-(NSString *) getInput: (NSString *)prompt defaultValue: (NSString *)defaultValue;
+-(void) exit;
 
 @end
 
@@ -32,7 +33,8 @@ private:
 public:
     AppDelegateBridge(AppDelegateBridgeNative *);
     
-    void notify(std::string, std::string);
+    void setNotificationCount(int);
+    void notify(std::string, std::string, std::string = "");
     std::string getInput(std::string);
 };
 

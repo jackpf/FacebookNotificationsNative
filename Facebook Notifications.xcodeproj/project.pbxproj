@@ -21,6 +21,7 @@
 		DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD530AF61BC8FE2A00194065 /* Request.cpp */; };
 		DD9AB97C1BCBB02100AE6B38 /* Notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB97A1BCBB02100AE6B38 /* Notifications.cpp */; };
 		DD9AB9811BCBBA1B00AE6B38 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */; };
+		DD9AB9841BCC15CC00AE6B38 /* ImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9821BCC15CC00AE6B38 /* ImageCache.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		DD9AB97B1BCBB02100AE6B38 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notification.cpp; sourceTree = "<group>"; };
 		DD9AB9801BCBBA1B00AE6B38 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		DD9AB9821BCC15CC00AE6B38 /* ImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageCache.cpp; sourceTree = "<group>"; };
+		DD9AB9831BCC15CC00AE6B38 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				DD9AB97F1BCBBA1B00AE6B38 /* Notification.cpp */,
 				DD9AB97B1BCBB02100AE6B38 /* Notifications.h */,
 				DD9AB97A1BCBB02100AE6B38 /* Notifications.cpp */,
+				DD9AB9831BCC15CC00AE6B38 /* ImageCache.h */,
+				DD9AB9821BCC15CC00AE6B38 /* ImageCache.cpp */,
 			);
 			name = Facebook;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				DD3661A21BC7AEB00000D2ED /* main.m in Sources */,
 				DD530AF81BC8FE2A00194065 /* Request.cpp in Sources */,
 				DD9AB97C1BCBB02100AE6B38 /* Notifications.cpp in Sources */,
+				DD9AB9841BCC15CC00AE6B38 /* ImageCache.cpp in Sources */,
 				DD3661D01BC7C5A40000D2ED /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
 			);
@@ -412,6 +418,7 @@
 				OTHER_LDFLAGS = (
 					"-lcurl",
 					"-lboost_system",
+					"-lboost_filesystem",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -437,6 +444,7 @@
 				OTHER_LDFLAGS = (
 					"-lcurl",
 					"-lboost_system",
+					"-lboost_filesystem",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -8,12 +8,14 @@
 
 #include "Request.h"
 
-static size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
+static size_t write_callback(char *ptr, size_t size, size_t nmemb, std::ostream *userdata)
 {
-    std::ostream *response = static_cast<std::ostream *>(userdata);
-    response->write(ptr, size * nmemb);
+    size_t len = size * nmemb;
     
-    return size * nmemb;
+    userdata->write(ptr, len);
+    userdata->flush();
+    
+    return len;
 }
 
 Request::Request(std::string accessToken)
@@ -35,6 +37,7 @@ void Request::request(const std::string path, std::ostream *response) throw(std:
     curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(ch, CURLOPT_WRITEDATA, response);
     curl_easy_setopt(ch, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
     
     if ((res = curl_easy_perform(ch)) != CURLE_OK) {
         std::string errStr = "Request: " + std::string(strerror(res));

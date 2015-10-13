@@ -15,7 +15,7 @@
 class Notification : public std::vector<std::pair<std::string, std::string>>
 {
 public:
-    std::string get(std::string);
+    std::string get(const std::string);
 };
 
 #endif /* defined(__Facebook_Notifications__Notification__) */

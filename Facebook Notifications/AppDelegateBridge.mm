@@ -8,6 +8,10 @@
 
 #include "AppDelegateBridge.h"
 
+@interface NSUserNotification (CFIPrivate)
+    - (void)set_identityImage:(NSImage *)image;
+@end
+
 @implementation AppDelegateBridgeNative
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
@@ -21,25 +25,53 @@
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
     self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    //self.statusBar.title = @"F";
     self.statusBar.image = [NSImage imageNamed:@"notification_light"];
-    self.statusBar.menu = self.statusMenu;
+    self.statusBar.alternateImage =[NSImage imageNamed:@"notification_alt"];
     self.statusBar.highlightMode = YES;
+    
+    NSZone *menuZone = [NSMenu menuZone];
+    NSMenu *menu = [[NSMenu allocWithZone:menuZone] init];
+    NSMenuItem *menuItem;
+    
+    menuItem = [menu addItemWithTitle:@"Mark all as read"
+                                    action:@selector(markAllAsRead:)
+                                    keyEquivalent:@""];
+    [menuItem setTarget:self];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    menuItem = [menu addItemWithTitle:@"Exit"
+                               action:@selector(exit)
+                        keyEquivalent:@""];
+    [menuItem setTarget:self];
+    
+    self.statusBar.menu = menu;
     
     return self;
 }
 
--(void)notify:(NSString *) title :(NSString *)body;
+-(void)setNotificationCount:(int)count
+{
+    if (count > 0) {
+        self.statusBar.image = [NSImage imageNamed:@"notification_dark"];
+    } else {
+        self.statusBar.image = [NSImage imageNamed:@"notification_light"];
+    }
+    
+    self.statusBar.toolTip = [NSString stringWithFormat:@"%d notifications", count];
+}
+
+-(void)notify:(NSString *)title :(NSString *)body :(NSString *)image;
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
-    notification.informativeText = body;
-    notification.soundName = NSUserNotificationDefaultSoundName;
-    [[NSUserNotificationCenter defaultUserNotificationCenter]
-     deliverNotification:notification];
+    notification.subtitle = body;
+    //notification.contentImage = [NSImage imageNamed:image];
+    [notification set_identityImage:[NSImage imageNamed:image]];
+    [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
-- (NSString *)getInput: (NSString *)prompt
+-(NSString *)getInput: (NSString *)prompt
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
                                      defaultButton:@"OK"
@@ -63,6 +95,11 @@
     }
 }
 
+-(void) exit
+{
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
 @end
 
 AppDelegateBridge::AppDelegateBridge(AppDelegateBridgeNative *bridge)
@@ -70,9 +107,14 @@ AppDelegateBridge::AppDelegateBridge(AppDelegateBridgeNative *bridge)
     this->bridge = bridge;
 }
 
-void AppDelegateBridge::notify(std::string title, std::string body)
+void AppDelegateBridge::notify(std::string title, std::string body, std::string image)
 {
-    [bridge notify:[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()]];
+    [bridge notify:[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()] :[NSString stringWithUTF8String:image.c_str()]];
+}
+
+void AppDelegateBridge::setNotificationCount(int count)
+{
+    [bridge setNotificationCount:count];
 }
 
 std::string AppDelegateBridge::getInput(std::string prompt)

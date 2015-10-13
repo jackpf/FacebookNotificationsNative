@@ -12,6 +12,7 @@
 #include <thread>
 #include "AppDelegateBridge.h"
 #include "Parser.h"
+#include "ImageCache.h"
 
 class Main
 {

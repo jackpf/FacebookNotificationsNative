@@ -8,7 +8,7 @@
 
 #include "Notification.h"
 
-std::string Notification::get(std::string key)
+std::string Notification::get(const std::string key)
 {
     for(iterator it = begin(); it != end(); ++it) {
         std::pair<std::string, std::string> pv = static_cast<std::pair<std::string, std::string>>(*it);

@@ -19,6 +19,7 @@ int Main::main(AppDelegateBridge *bridge)
     
     Request request(accessToken);
     Parser parser;
+    ImageCache cache(&request);
     
     try {
         std::stringstream buffer;
@@ -31,13 +32,15 @@ int Main::main(AppDelegateBridge *bridge)
             
             cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
             
+            bridge->setNotificationCount(static_cast<int>(notifications.size()));
+            
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), notification.get("title"));
+                bridge->notify(notification.get("id"), notification.get("title"), cache.fetch(notification.get("from")));
             }
             
-            sleep(10);
+            sleep(60);
         }
     } catch (std::runtime_error e) {
         std::cout << "Caught exception: " << e.what() << std::endl;
