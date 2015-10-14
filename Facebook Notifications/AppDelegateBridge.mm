@@ -63,7 +63,7 @@
     return self;
 }
 
-- (void) setNotificationCount :(int) count
+- (void) setNotificationCount :(unsigned long) count
 {
     if (count > 0) {
         self.statusBar.image = [NSImage imageNamed:@"notification_dark"];
@@ -73,12 +73,13 @@
         self.markNotificationsReadMenuItem.enabled = NO;
     }
     
-    self.statusBar.toolTip = [NSString stringWithFormat:@"%d notifications", count];
+    self.statusBar.toolTip = [NSString stringWithFormat:@"%lu notifications", count];
 }
 
-- (void) notify :(NSString *) title :(NSString *) body :(NSString *) image;
+- (void) notify :(NSString *) identifier :(NSString *) title :(NSString *) body :(NSString *) image;
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
+    notification.identifier = identifier;
     notification.title = title;
     notification.subtitle = body;
     //notification.contentImage = [NSImage imageNamed:image];
@@ -143,12 +144,12 @@ void AppDelegateBridge::setBridge(AppDelegateBridgeNative *bridge)
     this->bridge = bridge;
 }
 
-void AppDelegateBridge::notify(std::string title, std::string body, std::string image)
+void AppDelegateBridge::notify(std::string identifier, std::string title, std::string body, std::string image)
 {
-    [bridge notify:[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()] :[NSString stringWithUTF8String:image.c_str()]];
+    [bridge notify:[NSString stringWithUTF8String:identifier.c_str()] :[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()] :[NSString stringWithUTF8String:image.c_str()]];
 }
 
-void AppDelegateBridge::setNotificationCount(int count)
+void AppDelegateBridge::setNotificationCount(size_t count)
 {
     [bridge setNotificationCount:count];
 }

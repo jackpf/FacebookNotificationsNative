@@ -427,7 +427,6 @@
 				OTHER_CFLAGS = (
 					"-I/usr/local/include",
 					"-I/usr/include",
-					"-lstdc++",
 				);
 				OTHER_LDFLAGS = (
 					"-lcurl",
@@ -453,7 +452,6 @@
 				OTHER_CFLAGS = (
 					"-I/usr/local/include",
 					"-I/usr/include",
-					"-lstdc++",
 				);
 				OTHER_LDFLAGS = (
 					"-lcurl",

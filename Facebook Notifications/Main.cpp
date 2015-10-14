@@ -35,11 +35,8 @@ int Main::main(AppDelegateBridge *bridge)
     Main::bridge = bridge;
     bridge->addEvent("markNotificationsRead", &markNotificationsRead);
     
-    std::string accessToken = bridge->getInput("Access token:");
-    //std::string accessToken = "CAAI9MvHB7MwBALX1nAzjrGu4JYORd5JmKZCueAPNKnIVZC2eVt8gf7AXhmqacL8PjRCggkSOSyistuDdgQwix4z0uZA50PWMESMMd3LvwwVd33LsJenUD6fQP02ywwzZAGqqhGviKrCLXd5BH2BWrF9kS8oBBDZCRW3KsWj1OzpzS6jslFtaR";
-    
     AccessTokenStorage tokenStorage;
-    tokenStorage.store(accessToken);
+    std::string accessToken = tokenStorage.read();
     
     request = new Request(accessToken);
     parser = new Parser;
@@ -55,12 +52,12 @@ int Main::main(AppDelegateBridge *bridge)
             
             cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
             
-            bridge->setNotificationCount(static_cast<int>(notifications.size()));
+            bridge->setNotificationCount(notifications.size());
             
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), notification.get("title"), cache.fetch(notification.get("from")));
+                bridge->notify(notification.get("id"), notification.get("title"), "", cache.fetch(notification.get("from")));
             }
         } catch (std::runtime_error e) {
             std::cout << "Caught exception: " << e.what() << std::endl;
