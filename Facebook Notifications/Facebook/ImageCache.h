@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
+#include <vector>
 #include "Request.h"
 
 class ImageCache

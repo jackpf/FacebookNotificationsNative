@@ -33,7 +33,7 @@ void ImageCache::cache(const std::string userId)
     std::string filename = getFilename(userId);
     std::fstream picture(filename, std::ios::out | std::ios::binary);
     
-    request->request("/" + userId + "/picture", &picture);
+    request->request("/" + userId + "/picture", std::vector<std::string>{"width=128", "height=128"}, false, &picture);
     
     picture.close();
 }
