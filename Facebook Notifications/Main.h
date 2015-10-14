@@ -25,7 +25,6 @@ private:
     
 public:
     static int main(AppDelegateBridge *);
-    
     static void markNotificationsRead(void *);
 };
 

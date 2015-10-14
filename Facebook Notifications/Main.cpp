@@ -13,23 +13,6 @@ Request *Main::request;
 Parser *Main::parser;
 Notifications Main::notifications;
 
-void Main::markNotificationsRead(void *data)
-{
-    int i = 0;
-    
-    for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
-        Notification notification = static_cast<Notification>(*it);
-        
-        request->request("/" + notification.get("id"), std::vector<std::string>{"unread=false"}, true, nullptr);
-        i++;
-    }
-    
-    notifications.reset();
-    bridge->setNotificationCount(0);
-    
-    std::cout << "Marked " << i << " notifications as read" << std::endl;
-}
-
 int Main::main(AppDelegateBridge *bridge)
 {
     Main::bridge = bridge;
@@ -57,7 +40,7 @@ int Main::main(AppDelegateBridge *bridge)
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), notification.get("title"), "", cache.fetch(notification.get("from")));
+                bridge->notify(notification.get("id"), "From", notification.get("title"), cache.fetch(notification.get("from")));
             }
         } catch (std::runtime_error e) {
             std::cout << "Caught exception: " << e.what() << std::endl;
@@ -71,4 +54,21 @@ int Main::main(AppDelegateBridge *bridge)
     //delete parser;
     
     return 0;
+}
+
+void Main::markNotificationsRead(void *data)
+{
+    int i = 0;
+    
+    for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
+        Notification notification = static_cast<Notification>(*it);
+        
+        request->request("/" + notification.get("id"), std::vector<std::string>{"unread=false"}, true, nullptr);
+        i++;
+    }
+    
+    notifications.reset();
+    bridge->setNotificationCount(0);
+    
+    std::cout << "Marked " << i << " notifications as read" << std::endl;
 }

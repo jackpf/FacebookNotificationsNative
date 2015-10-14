@@ -81,9 +81,9 @@
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.identifier = identifier;
     notification.title = title;
-    notification.subtitle = body;
-    //notification.contentImage = [NSImage imageNamed:image];
-    [notification set_identityImage:[NSImage imageNamed:image]];
+    notification.informativeText = body;
+    notification.contentImage = [[NSImage alloc] initWithContentsOfFile:image];
+    //[notification set_identityImage:[[NSImage alloc] initWithContentsOfFile:image]];
     [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
