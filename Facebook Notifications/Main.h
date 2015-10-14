@@ -13,6 +13,7 @@
 #include "AppDelegateBridge.h"
 #include "Parser.h"
 #include "ImageCache.h"
+#include "AccessTokenStorage.h"
 
 class Main
 {

@@ -47,15 +47,15 @@
     
         [self.menu addItem:[NSMenuItem separatorItem]];
         
+        self.settingsMenuItem = [self.menu addItemWithTitle:@"Settings"
+                                                     action:@selector(settings)
+                                              keyEquivalent:@""];
+        [self.settingsMenuItem setTarget:self];
+        
         self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
                                                  action:@selector(exit)
                                           keyEquivalent:@""];
         [self.exitMenuItem setTarget:self];
-        
-        self.settingsMenuItem = [self.menu addItemWithTitle:@"Settings"
-                                                 action:@selector(settings)
-                                          keyEquivalent:@""];
-        [self.settingsMenuItem setTarget:self];
     
         self.statusBar.menu = self.menu;
     }
