@@ -31,12 +31,12 @@ void Parser::parseNotifications(std::stringstream *json, Notifications *data) th
             std::pair<std::string, std::string> pv;
             
             if (strcmp(v2.first.data(), "from") == 0 || strcmp(v2.first.data(), "to") == 0) {
-                pv = std::make_pair(v2.first.data(), v2.second.get_child("id").data());
+                // Meh, a bit shitty...
+                notification.push_back(std::make_pair(std::string(v2.first.data()), v2.second.get_child("name").data()));
+                notification.push_back(std::make_pair(std::string(v2.first.data()) + "_id", v2.second.get_child("id").data()));
             } else {
-                pv = std::make_pair(v2.first.data(), v2.second.data());
+                notification.push_back(std::make_pair(v2.first.data(), v2.second.data()));
             }
-            
-            notification.push_back(pv);
         }
         
         data->push_back(notification);

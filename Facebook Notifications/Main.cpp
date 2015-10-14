@@ -40,7 +40,7 @@ int Main::main(AppDelegateBridge *bridge)
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), "From", notification.get("title"), cache.fetch(notification.get("from")));
+                bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), cache.fetch(notification.get("from_id")));
             }
         } catch (std::runtime_error e) {
             std::cout << "Caught exception: " << e.what() << std::endl;

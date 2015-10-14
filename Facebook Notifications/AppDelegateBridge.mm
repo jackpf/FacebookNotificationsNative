@@ -119,14 +119,15 @@
     [alert runModal];
 }
 
-- (void) test
+- (void) markNotificationsReadThread
 {
+    [NSUserNotificationCenter.defaultUserNotificationCenter removeAllDeliveredNotifications];
     self.bridge->event("markNotificationsRead");
 }
 
 - (void) markNotificationsRead
 {
-    [self performSelectorInBackground:@selector(test) withObject:nil];
+    [self performSelectorInBackground:@selector(markNotificationsReadThread) withObject:nil];
 }
 
 - (void) exit
