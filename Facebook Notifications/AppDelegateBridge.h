@@ -23,12 +23,13 @@ class AppDelegateBridge;
 @property (strong, nonatomic) NSStatusItem *statusBar;
 @property (nonatomic) NSZone *menuZone;
 @property (strong, nonatomic) NSMenu *menu;
-@property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *exitMenuItem;
+@property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *settingsMenuItem, *exitMenuItem;
 
 - (AppDelegateBridgeNative *) init;
 - (void) setNotificationCount :(int)count;
 - (void) notify :(NSString *)title :(NSString *)body :(NSString *)image;
-- (NSString *) getInput :(NSString *)prompt :(NSString *)defaultValue;
+- (void) getInput :(NSString *)prompt :(NSString **) r;
+- (void) alert :(NSString *)prompt;
 - (void) markNotificationsRead;
 - (void) exit;
 
@@ -47,6 +48,7 @@ public:
     void setNotificationCount(int);
     void notify(std::string, std::string, std::string = "");
     std::string getInput(std::string);
+    void alert(std::string);
     
     void addEvent(std::string, EventCallback);
     void removeEvent(std::string);

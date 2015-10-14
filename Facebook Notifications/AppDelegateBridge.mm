@@ -46,11 +46,16 @@
         [self.markNotificationsReadMenuItem setTarget:self];
     
         [self.menu addItem:[NSMenuItem separatorItem]];
-    
+        
         self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
-                               action:@selector(exit)
-                        keyEquivalent:@""];
+                                                 action:@selector(exit)
+                                          keyEquivalent:@""];
         [self.exitMenuItem setTarget:self];
+        
+        self.settingsMenuItem = [self.menu addItemWithTitle:@"Settings"
+                                                 action:@selector(settings)
+                                          keyEquivalent:@""];
+        [self.settingsMenuItem setTarget:self];
     
         self.statusBar.menu = self.menu;
     }
@@ -81,7 +86,7 @@
     [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
-- (NSString *) getInput :(NSString *) prompt
+- (void) getInput :(NSString *) prompt :(NSString **) r
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
                                 defaultButton:@"OK"
@@ -96,13 +101,24 @@
     NSInteger button = [alert runModal];
     if (button == NSAlertDefaultReturn) {
         [input validateEditing];
-        return [input stringValue];
+        *r = [input stringValue];
     } else if (button == NSAlertAlternateReturn) {
-        return @"";
+        *r = @"";
     } else {
         NSAssert1(NO, @"Invalid input dialog button %d", button);
-        return @"";
+        *r = @"";
     }
+}
+
+- (void) alert :(NSString *) prompt
+{
+    NSAlert *alert = [NSAlert alertWithMessageText: prompt
+                        defaultButton:@"OK"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:@""];
+    
+    [alert runModal];
 }
 
 - (void) markNotificationsRead
@@ -134,7 +150,18 @@ void AppDelegateBridge::setNotificationCount(int count)
 
 std::string AppDelegateBridge::getInput(std::string prompt)
 {
-    return [[bridge getInput:[NSString stringWithUTF8String:prompt.c_str()]] UTF8String];
+    __block NSString *r;
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [bridge getInput :[NSString stringWithUTF8String:prompt.c_str()] :&r];
+    });
+    
+    return [r UTF8String];
+}
+
+void AppDelegateBridge::alert(std::string prompt)
+{
+    [bridge performSelectorOnMainThread:@selector(alert:) withObject:[NSString stringWithUTF8String:prompt.c_str()] waitUntilDone:NO];
 }
 
 void AppDelegateBridge::addEvent(std::string eventName, EventCallback *callback)
@@ -150,4 +177,5 @@ void AppDelegateBridge::removeEvent(std::string eventName)
 void AppDelegateBridge::event(std::string eventName, void *data)
 {
     std::thread t(callbacks[eventName], data);
+    t.join();
 }
