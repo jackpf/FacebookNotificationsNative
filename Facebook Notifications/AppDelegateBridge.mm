@@ -103,10 +103,7 @@
     if (button == NSAlertDefaultReturn) {
         [input validateEditing];
         *r = [input stringValue];
-    } else if (button == NSAlertAlternateReturn) {
-        *r = @"";
     } else {
-        NSAssert1(NO, @"Invalid input dialog button %d", button);
         *r = @"";
     }
 }
