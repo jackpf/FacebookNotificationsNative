@@ -70,8 +70,8 @@ int Main::main(AppDelegateBridge *bridge)
         sleep(10);
     }
     
-    delete request;
-    delete parser;
+    //delete request;
+    //delete parser;
     
     return 0;
 }

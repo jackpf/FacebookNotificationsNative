@@ -121,9 +121,14 @@
     [alert runModal];
 }
 
-- (void) markNotificationsRead
+- (void) test
 {
     self.bridge->event("markNotificationsRead");
+}
+
+- (void) markNotificationsRead
+{
+    [self performSelectorInBackground:@selector(test) withObject:nil];
 }
 
 - (void) exit
@@ -176,6 +181,5 @@ void AppDelegateBridge::removeEvent(std::string eventName)
 
 void AppDelegateBridge::event(std::string eventName, void *data)
 {
-    std::thread t(callbacks[eventName], data);
-    t.join();
+    callbacks[eventName](data);
 }
