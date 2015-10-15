@@ -15,8 +15,6 @@
 		DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3661BE1BC7AF040000D2ED /* Main.cpp */; };
 		DD3661CD1BC7B8F40000D2ED /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3661CC1BC7B8F40000D2ED /* AppKit.framework */; };
 		DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */; };
-		DD9AB9951BCD5DE500AE6B38 /* Notification.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9861BCD5DE500AE6B38 /* Notification.mm */; };
-		DD9AB9961BCD5DE500AE6B38 /* SystemTray.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9891BCD5DE500AE6B38 /* SystemTray.mm */; };
 		DD9AB9971BCD5DE500AE6B38 /* ImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */; };
 		DD9AB9981BCD5DE500AE6B38 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */; };
 		DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */; };
@@ -51,10 +49,6 @@
 		DD3661CC1BC7B8F40000D2ED /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegateBridge.mm; sourceTree = "<group>"; };
 		DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegateBridge.h; sourceTree = "<group>"; };
-		DD9AB9861BCD5DE500AE6B38 /* Notification.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Notification.mm; sourceTree = "<group>"; };
-		DD9AB9871BCD5DE500AE6B38 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
-		DD9AB9881BCD5DE500AE6B38 /* SystemTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemTray.h; sourceTree = "<group>"; };
-		DD9AB9891BCD5DE500AE6B38 /* SystemTray.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SystemTray.mm; sourceTree = "<group>"; };
 		DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageCache.cpp; sourceTree = "<group>"; };
 		DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notification.cpp; sourceTree = "<group>"; };
@@ -111,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				DD9AB9A01BCE61E900AE6B38 /* Service */,
-				DD9AB9851BCD5DE500AE6B38 /* Bridge */,
 				DD9AB98A1BCD5DE500AE6B38 /* Facebook */,
 				DD3661BD1BC7AEE60000D2ED /* Main.h */,
 				DD3661BE1BC7AF040000D2ED /* Main.cpp */,
@@ -150,17 +143,6 @@
 				DD3661B11BC7AEB00000D2ED /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DD9AB9851BCD5DE500AE6B38 /* Bridge */ = {
-			isa = PBXGroup;
-			children = (
-				DD9AB9861BCD5DE500AE6B38 /* Notification.mm */,
-				DD9AB9871BCD5DE500AE6B38 /* Notification.h */,
-				DD9AB9881BCD5DE500AE6B38 /* SystemTray.h */,
-				DD9AB9891BCD5DE500AE6B38 /* SystemTray.mm */,
-			);
-			path = Bridge;
 			sourceTree = "<group>";
 		};
 		DD9AB98A1BCD5DE500AE6B38 /* Facebook */ = {
@@ -290,13 +272,11 @@
 			files = (
 				DD9AB9981BCD5DE500AE6B38 /* Notification.cpp in Sources */,
 				DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */,
-				DD9AB9951BCD5DE500AE6B38 /* Notification.mm in Sources */,
 				DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */,
 				DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */,
 				DD9AB9971BCD5DE500AE6B38 /* ImageCache.cpp in Sources */,
 				DD3661A21BC7AEB00000D2ED /* main.m in Sources */,
 				DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */,
-				DD9AB9961BCD5DE500AE6B38 /* SystemTray.mm in Sources */,
 				DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
 				DD9AB9A31BCE620300AE6B38 /* AccessTokenStorage.cpp in Sources */,

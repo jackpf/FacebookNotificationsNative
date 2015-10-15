@@ -47,7 +47,7 @@ int Main::main(AppDelegateBridge *bridge)
             bridge->alert(e.what());
         }
             
-        sleep(10);
+        sleep(60);
     }
     
     //delete request;
