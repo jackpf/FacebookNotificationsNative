@@ -24,10 +24,12 @@ class AppDelegateBridge;
 @property (nonatomic) NSZone *menuZone;
 @property (strong, nonatomic) NSMenu *menu;
 @property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *settingsMenuItem, *exitMenuItem;
+@property (strong, nonatomic) NSMutableDictionary *notificationPaths;
+@property unsigned long notificationCount;
 
 - (AppDelegateBridgeNative *) init;
-- (void) setNotificationCount :(unsigned long)count;
-- (void) notify :(NSString *)identifier :(NSString *)title :(NSString *)body :(NSString *)image;
+- (void) updateNotificationCount :(unsigned long)count;
+- (void) notify :(NSString *)identifier :(NSString *)title :(NSString *)body :(NSString *) path :(NSString *)image;
 - (void) getInput :(NSString *)prompt :(NSString **) r;
 - (void) alert :(NSString *)prompt;
 - (void) markNotificationsRead;
@@ -45,8 +47,8 @@ public:
     std::unordered_map<std::string, EventCallback *> callbacks;
     
     void setBridge(AppDelegateBridgeNative *);
-    void setNotificationCount(size_t);
-    void notify(std::string, std::string, std::string, std::string = "");
+    void updateNotificationCount(size_t);
+    void notify(std::string, std::string, std::string, std::string, std::string = "");
     std::string getInput(std::string);
     void alert(std::string);
     

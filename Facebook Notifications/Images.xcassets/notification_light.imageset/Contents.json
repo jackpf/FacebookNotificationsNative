@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "notification_light-1.png"
+      "filename" : "notification_light.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "notification_light.png"
+      "filename" : "notification_light-1.png"
     },
     {
       "idiom" : "universal",

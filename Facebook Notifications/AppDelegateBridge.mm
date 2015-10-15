@@ -9,27 +9,31 @@
 #include "AppDelegateBridge.h"
 
 @interface NSUserNotification (CFIPrivate)
-    - (void)set_identityImage:(NSImage *)image;
+- (void)set_identityImage:(NSImage *)image;
 @end
 
 @implementation AppDelegateBridgeNative
 
 - (BOOL) userNotificationCenter :(NSUserNotificationCenter *)center
-     shouldPresentNotification:(NSUserNotification *)notification
+       shouldPresentNotification:(NSUserNotification *)notification
 {
     return YES;
 }
 
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
-    printf("NOTIFICATION!\n");
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:[self.notificationPaths objectForKey:notification.identifier]]];
+    [NSUserNotificationCenter.defaultUserNotificationCenter removeDeliveredNotification:notification];
+    [self setNotificationCount:self.notificationCount - 1];
 }
 
 - (AppDelegateBridgeNative *) init
 {
     if (self = [super init]) {
+        self.notificationPaths = [[NSMutableDictionary alloc] init];
+        
         [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
-    
+        
         self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
         self.statusBar.image = [NSImage imageNamed:@"notification_light"];
         self.statusBar.alternateImage =[NSImage imageNamed:@"notification_alt"];
@@ -38,28 +42,30 @@
         self.menuZone = [NSMenu menuZone];
         self.menu = [[NSMenu allocWithZone:self.menuZone] init];
         [self.menu setAutoenablesItems:NO];
-    
+        
         self.markNotificationsReadMenuItem = [self.menu addItemWithTitle:@"Mark all as read"
-                                    action:@selector(markNotificationsRead)
-                                    keyEquivalent:@""];
+                                                                  action:@selector(markNotificationsRead)
+                                                           keyEquivalent:@""];
         self.markNotificationsReadMenuItem.enabled = false;
         [self.markNotificationsReadMenuItem setTarget:self];
-    
+        
         [self.menu addItem:[NSMenuItem separatorItem]];
         
         self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
                                                  action:@selector(exit)
                                           keyEquivalent:@""];
         [self.exitMenuItem setTarget:self];
-    
+        
         self.statusBar.menu = self.menu;
     }
     
     return self;
 }
 
-- (void) setNotificationCount :(unsigned long) count
+- (void) updateNotificationCount :(unsigned long) count
 {
+    self.notificationCount = count;
+    
     if (count > 0) {
         self.statusBar.image = [NSImage imageNamed:@"notification_dark"];
         self.markNotificationsReadMenuItem.enabled = YES;
@@ -71,8 +77,10 @@
     self.statusBar.toolTip = [NSString stringWithFormat:@"%lu notifications", count];
 }
 
-- (void) notify :(NSString *) identifier :(NSString *) title :(NSString *) body :(NSString *) image;
+- (void) notify :(NSString *) identifier :(NSString *) title :(NSString *) body :(NSString *) path :(NSString *) image;
 {
+    [self.notificationPaths setObject:path forKey:identifier];
+    
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.identifier = identifier;
     notification.title = title;
@@ -85,10 +93,10 @@
 - (void) getInput :(NSString *) prompt :(NSString **) r
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
-                                defaultButton:@"OK"
-                                alternateButton:@"Cancel"
-                                otherButton:nil
-                                informativeTextWithFormat:@""];
+                                     defaultButton:@"OK"
+                                   alternateButton:@"Cancel"
+                                       otherButton:nil
+                         informativeTextWithFormat:@""];
     
     NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
     //[input setStringValue:defaultValue];
@@ -106,7 +114,7 @@
 - (void) alert :(NSString *) prompt
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
-                        defaultButton:@"OK"
+                                     defaultButton:@"OK"
                                    alternateButton:nil
                                        otherButton:nil
                          informativeTextWithFormat:@""];
@@ -137,14 +145,14 @@ void AppDelegateBridge::setBridge(AppDelegateBridgeNative *bridge)
     this->bridge = bridge;
 }
 
-void AppDelegateBridge::notify(std::string identifier, std::string title, std::string body, std::string image)
+void AppDelegateBridge::notify(std::string identifier, std::string title, std::string body, std::string path, std::string image)
 {
-    [bridge notify:[NSString stringWithUTF8String:identifier.c_str()] :[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()] :[NSString stringWithUTF8String:image.c_str()]];
+    [bridge notify:[NSString stringWithUTF8String:identifier.c_str()] :[NSString stringWithUTF8String:title.c_str()] :[NSString stringWithUTF8String:body.c_str()] :[NSString stringWithUTF8String:path.c_str()] :[NSString stringWithUTF8String:image.c_str()]];
 }
 
-void AppDelegateBridge::setNotificationCount(size_t count)
+void AppDelegateBridge::updateNotificationCount(size_t count)
 {
-    [bridge setNotificationCount:count];
+    [bridge updateNotificationCount:count];
 }
 
 std::string AppDelegateBridge::getInput(std::string prompt)

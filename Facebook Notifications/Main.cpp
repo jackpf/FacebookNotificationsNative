@@ -35,12 +35,12 @@ int Main::main(AppDelegateBridge *bridge)
             
             cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
             
-            bridge->setNotificationCount(notifications.size());
+            bridge->updateNotificationCount(notifications.size());
             
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), cache.fetch(notification.get("from_id")));
+                bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache.fetch(notification.get("from_id")));
             }
         } catch (std::runtime_error e) {
             std::cout << "Caught exception: " << e.what() << std::endl;
@@ -68,7 +68,7 @@ void Main::markNotificationsRead(void *data)
     }
     
     notifications.reset();
-    bridge->setNotificationCount(0);
+    bridge->updateNotificationCount(0);
     
     std::cout << "Marked " << i << " notifications as read" << std::endl;
 }
