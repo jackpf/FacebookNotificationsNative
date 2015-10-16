@@ -21,6 +21,7 @@ private:
     static AppDelegateBridge *bridge;
     static Request *request;
     static Parser *parser;
+    static ImageCache *cache;
     static Notifications notifications;
     
 public:

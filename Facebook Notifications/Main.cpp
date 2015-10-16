@@ -11,6 +11,7 @@
 AppDelegateBridge *Main::bridge;
 Request *Main::request;
 Parser *Main::parser;
+ImageCache *Main::cache;
 Notifications Main::notifications;
 
 int Main::main(AppDelegateBridge *bridge)
@@ -23,7 +24,8 @@ int Main::main(AppDelegateBridge *bridge)
     
     request = new Request(accessToken);
     parser = new Parser;
-    ImageCache cache(request);
+    cache = new ImageCache(request);
+    cache->prune();
     
     std::stringstream buffer;
     
@@ -36,14 +38,14 @@ int Main::main(AppDelegateBridge *bridge)
             parser->parseNotifications(&buffer, &notifications);
             Notifications newNotifications = notifications.getNew();
             
-            cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
+            std::cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
             
             bridge->updateNotificationCount(notifications.size());
             
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
                 Notification notification = static_cast<Notification>(*it);
                 
-                bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache.fetch(notification.get("from_id")));
+                bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache->fetch(notification.get("from_id")));
             }
         } catch (std::runtime_error e) {
             std::cout << "Caught exception: " << e.what() << std::endl;
@@ -55,6 +57,7 @@ int Main::main(AppDelegateBridge *bridge)
     
     //delete request;
     //delete parser;
+    //delete cache;
     
     return 0;
 }

@@ -30,6 +30,7 @@ private:
     
 public:
     ImageCache(Request *);
+    int prune();
     std::string fetch(const std::string);
 };
 

@@ -18,6 +18,11 @@ ImageCache::ImageCache(Request *request)
     }
 }
 
+int ImageCache::prune()
+{
+    return 0;
+}
+
 std::string ImageCache::getFilename(const std::string userId)
 {
     return cacheDir + "/" + userId + ".jpg";

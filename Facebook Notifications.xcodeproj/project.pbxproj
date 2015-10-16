@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD1CE0A91BD15095006D44D5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD1CE0A71BD15095006D44D5 /* MainMenu.xib */; };
 		DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD36619F1BC7AEB00000D2ED /* AppDelegate.mm */; };
 		DD3661A21BC7AEB00000D2ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3661A11BC7AEB00000D2ED /* main.m */; };
 		DD3661A41BC7AEB00000D2ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3661A31BC7AEB00000D2ED /* Images.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD1CE0A81BD15095006D44D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = MainMenu.xib; sourceTree = "<group>"; };
 		DD3661991BC7AEB00000D2ED /* Facebook Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Facebook Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD36619D1BC7AEB00000D2ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD36619E1BC7AEB00000D2ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD1CE0A61BD15095006D44D5 /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				DD1CE0A71BD15095006D44D5 /* MainMenu.xib */,
+			);
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
 		DD3661901BC7AEB00000D2ED = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +123,7 @@
 				DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */,
 				DD3661A31BC7AEB00000D2ED /* Images.xcassets */,
 				DD3661A51BC7AEB00000D2ED /* MainMenu.xib */,
+				DD1CE0A61BD15095006D44D5 /* Base.lproj */,
 				DD36619C1BC7AEB00000D2ED /* Supporting Files */,
 			);
 			path = "Facebook Notifications";
@@ -245,6 +256,7 @@
 			files = (
 				DD3661A41BC7AEB00000D2ED /* Images.xcassets in Resources */,
 				DD3661A71BC7AEB00000D2ED /* MainMenu.xib in Resources */,
+				DD1CE0A91BD15095006D44D5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +306,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DD1CE0A71BD15095006D44D5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DD1CE0A81BD15095006D44D5 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		DD3661A51BC7AEB00000D2ED /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

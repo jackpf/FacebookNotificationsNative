@@ -20,7 +20,7 @@ bool Notifications::containsNotification(Notification notificationToFind)
     for(iterator it = begin(); it != end(); ++it) {
         Notification notification = static_cast<Notification>(*it);
         
-        if (notification.get("id").compare(notificationToFind.get("id")) == 0) {
+        if (notification.get("id").compare(notificationToFind.get("id")) == 0 && notification.get("title").compare(notificationToFind.get("title")) == 0) {
             return true;
         }
     }

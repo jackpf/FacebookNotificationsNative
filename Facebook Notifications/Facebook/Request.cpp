@@ -8,6 +8,8 @@
 
 #include "Request.h"
 
+std::mutex Request::mutex;
+
 static size_t write_callback(char *ptr, size_t size, size_t nmemb, std::ostream *userdata)
 {
     size_t len = size * nmemb;

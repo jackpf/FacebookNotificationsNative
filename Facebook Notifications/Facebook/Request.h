@@ -25,7 +25,7 @@ private:
     std::string accessToken;
     
 public:
-    std::mutex mutex;
+    static std::mutex mutex;
     
     Request(std::string);
     void request(const std::string, std::vector<std::string>, bool, std::ostream *) throw(std::runtime_error);
