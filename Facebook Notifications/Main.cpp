@@ -29,7 +29,10 @@ int Main::main(AppDelegateBridge *bridge)
     
     while (true) {
         try {
+            request->mutex.lock();
             request->request("/me/notifications", &buffer);
+            request->mutex.unlock();
+            
             parser->parseNotifications(&buffer, &notifications);
             Notifications newNotifications = notifications.getNew();
             
@@ -58,6 +61,8 @@ int Main::main(AppDelegateBridge *bridge)
 
 void Main::markNotificationsRead(void *data)
 {
+    request->mutex.lock();
+    
     int i = 0;
     
     for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
@@ -69,6 +74,8 @@ void Main::markNotificationsRead(void *data)
     
     notifications.reset();
     bridge->updateNotificationCount(0);
+    
+    request->mutex.unlock();
     
     std::cout << "Marked " << i << " notifications as read" << std::endl;
 }
