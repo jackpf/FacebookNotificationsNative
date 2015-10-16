@@ -25,7 +25,8 @@ std::string ImageCache::getFilename(const std::string userId)
 
 bool ImageCache::isCached(const std::string userId)
 {
-    return boost::filesystem::exists(getFilename(userId));
+    long t = std::time(nullptr) - boost::filesystem::last_write_time(getFilename(userId));
+    return boost::filesystem::exists(getFilename(userId)) && t < CACHE_TIME;
 }
 
 void ImageCache::cache(const std::string userId)

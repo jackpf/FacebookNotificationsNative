@@ -13,7 +13,10 @@
 #include <fstream>
 #include <boost/filesystem.hpp>
 #include <vector>
+#include <ctime>
 #include "Request.h"
+
+#define CACHE_TIME 60 * 60 * 24;
 
 class ImageCache
 {

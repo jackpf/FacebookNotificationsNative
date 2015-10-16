@@ -24,7 +24,7 @@
 {
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:[self.notificationPaths objectForKey:notification.identifier]]];
     [NSUserNotificationCenter.defaultUserNotificationCenter removeDeliveredNotification:notification];
-    [self setNotificationCount:self.notificationCount - 1];
+    [self updateNotificationCount:self.notificationCount - 1];
 }
 
 - (AppDelegateBridgeNative *) init

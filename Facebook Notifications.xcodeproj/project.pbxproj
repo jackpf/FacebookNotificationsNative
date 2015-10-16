@@ -20,7 +20,7 @@
 		DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */; };
 		DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9911BCD5DE500AE6B38 /* Parser.cpp */; };
 		DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9931BCD5DE500AE6B38 /* Request.cpp */; };
-		DD9AB9A31BCE620300AE6B38 /* AccessTokenStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9A11BCE620300AE6B38 /* AccessTokenStorage.cpp */; };
+		DDF0C16B1BD0F575007F13AA /* AccessTokenStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF0C1691BD0F575007F13AA /* AccessTokenStorage.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +59,8 @@
 		DD9AB9921BCD5DE500AE6B38 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		DD9AB9931BCD5DE500AE6B38 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
 		DD9AB9941BCD5DE500AE6B38 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
-		DD9AB9A11BCE620300AE6B38 /* AccessTokenStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccessTokenStorage.cpp; sourceTree = "<group>"; };
-		DD9AB9A21BCE620300AE6B38 /* AccessTokenStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenStorage.h; sourceTree = "<group>"; };
+		DDF0C1691BD0F575007F13AA /* AccessTokenStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccessTokenStorage.cpp; sourceTree = "<group>"; };
+		DDF0C16A1BD0F575007F13AA /* AccessTokenStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenStorage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +104,6 @@
 		DD36619B1BC7AEB00000D2ED /* Facebook Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				DD9AB9A01BCE61E900AE6B38 /* Service */,
 				DD9AB98A1BCD5DE500AE6B38 /* Facebook */,
 				DD3661BD1BC7AEE60000D2ED /* Main.h */,
 				DD3661BE1BC7AF040000D2ED /* Main.cpp */,
@@ -148,6 +147,8 @@
 		DD9AB98A1BCD5DE500AE6B38 /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
+				DDF0C1691BD0F575007F13AA /* AccessTokenStorage.cpp */,
+				DDF0C16A1BD0F575007F13AA /* AccessTokenStorage.h */,
 				DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */,
 				DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */,
 				DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */,
@@ -160,15 +161,6 @@
 				DD9AB9941BCD5DE500AE6B38 /* Request.h */,
 			);
 			path = Facebook;
-			sourceTree = "<group>";
-		};
-		DD9AB9A01BCE61E900AE6B38 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				DD9AB9A11BCE620300AE6B38 /* AccessTokenStorage.cpp */,
-				DD9AB9A21BCE620300AE6B38 /* AccessTokenStorage.h */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,11 +267,11 @@
 				DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */,
 				DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */,
 				DD9AB9971BCD5DE500AE6B38 /* ImageCache.cpp in Sources */,
+				DDF0C16B1BD0F575007F13AA /* AccessTokenStorage.cpp in Sources */,
 				DD3661A21BC7AEB00000D2ED /* main.m in Sources */,
 				DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */,
 				DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
-				DD9AB9A31BCE620300AE6B38 /* AccessTokenStorage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
