@@ -27,8 +27,8 @@ class AppDelegateBridge;
 @property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *settingsMenuItem, *exitMenuItem;
 @property (strong, nonatomic) NSMutableDictionary *notificationPaths;
 @property unsigned long notificationCount;
-@property (strong, nonatomic) WebViewWindowController *webView;
-@property (assign) IBOutlet NSWindow *webWindow;
+@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet WebView *webView;
 
 - (AppDelegateBridgeNative *) init;
 - (void) updateNotificationCount :(unsigned long)count;

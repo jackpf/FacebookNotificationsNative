@@ -14,12 +14,13 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
+                <outlet property="webView" destination="UZx-ZD-SYL" id="mu7-60-Uni"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="gKH-od-LpS"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6"/>
-        <window title="Facebook Notifications" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="Facebook Notifications" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
@@ -29,7 +30,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <webView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UZx-ZD-SYL">
-                        <rect key="frame" x="55" y="140" width="254" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                         <animations/>
                         <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12">
                             <nil key="identifier"/>
