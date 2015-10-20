@@ -10,6 +10,7 @@
 #define Facebook_Notifications_Main_h
 
 #include <thread>
+#include <chrono>
 #include "AppDelegateBridge.h"
 #include "Parser.h"
 #include "ImageCache.h"
@@ -23,9 +24,11 @@ private:
     static Parser *parser;
     static ImageCache *cache;
     static Notifications notifications;
+    static std::string accessToken;
     
 public:
     static int main(AppDelegateBridge *);
+    static void markNotificationRead(void *);
     static void markNotificationsRead(void *);
 };
 

@@ -11,7 +11,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <boost/filesystem.hpp>
+#include <map>
+#include <regex>
+#include "Request.h"
+#include "Data.h"
 
 class AccessTokenStorage
 {
@@ -22,6 +27,8 @@ public:
     AccessTokenStorage();
     void store(std::string);
     std::string read();
+    std::string getAccessTokenFromCode(std::string) throw(std::runtime_error);
+    std::string getCodeFromUrl(std::string) throw(std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__AccessTokenStorage__) */

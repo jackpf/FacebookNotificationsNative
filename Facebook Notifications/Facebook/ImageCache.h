@@ -21,7 +21,7 @@
 class ImageCache
 {
 private:
-    Request *request;
+    std::string accessToken;
     std::string cacheDir;
     
     std::string getFilename(const std::string);
@@ -29,7 +29,7 @@ private:
     void cache(const std::string);
     
 public:
-    ImageCache(Request *);
+    ImageCache(std::string);
     int prune();
     std::string fetch(const std::string);
 };

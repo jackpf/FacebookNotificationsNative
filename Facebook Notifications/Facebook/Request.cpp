@@ -9,6 +9,7 @@
 #include "Request.h"
 
 std::mutex Request::mutex;
+Request *Request::self;
 
 static size_t write_callback(char *ptr, size_t size, size_t nmemb, std::ostream *userdata)
 {
@@ -22,12 +23,28 @@ static size_t write_callback(char *ptr, size_t size, size_t nmemb, std::ostream 
     return len;
 }
 
-Request::Request(std::string accessToken)
+Request::Request()
 {
-    this->accessToken = accessToken;
+    
 }
 
-void Request::request(const std::string path, std::vector<std::string> params, bool post, std::ostream *response) throw(std::runtime_error)
+Request *Request::getInstance()
+{
+    if (self == nullptr) {
+        self = new Request;
+    }
+    
+    return self;
+}
+
+Request::~Request()
+{
+    if (self != nullptr) {
+        delete self;
+    }
+}
+
+void Request::request(const std::string path, Params params, bool post, std::ostream *response) throw(std::runtime_error)
 {
     CURL *ch;
     CURLcode res;
@@ -36,10 +53,11 @@ void Request::request(const std::string path, std::vector<std::string> params, b
         throw std::runtime_error("Request: Unable to initialise curl");
     }
     
-    std::string url = BASE_URL + path + "?access_token=" + accessToken;
+    std::string url = FB_API_URL + path + "?";
     
-    for(std::vector<std::string>::iterator it = params.begin(); it != params.end(); ++it) {
-        url += "&" + std::string(*it);
+    for(Params::iterator it = params.begin(); it != params.end(); ++it) {
+        Param pv = static_cast<Param>(*it);
+        url += "&" + static_cast<std::string>(pv.first.data()) + "=" + static_cast<std::string>(pv.second.data());
     }
     
     curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, write_callback);
@@ -62,5 +80,10 @@ void Request::request(const std::string path, std::vector<std::string> params, b
 
 void Request::request(const std::string path, std::ostream *response) throw(std::runtime_error)
 {
-    request(path, std::vector<std::string>(), false, response);
+    request(path, Params(), false, response);
+}
+
+void Request::request(const std::string path, Params params, std::ostream *response) throw(std::runtime_error)
+{
+    request(path, params, false, response);
 }

@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import "WebViewWindowController.h"
 #include <iostream>
 #include <unordered_map>
 #include <thread>
@@ -26,6 +27,8 @@ class AppDelegateBridge;
 @property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *settingsMenuItem, *exitMenuItem;
 @property (strong, nonatomic) NSMutableDictionary *notificationPaths;
 @property unsigned long notificationCount;
+@property (strong, nonatomic) WebViewWindowController *webView;
+@property (assign) IBOutlet NSWindow *webWindow;
 
 - (AppDelegateBridgeNative *) init;
 - (void) updateNotificationCount :(unsigned long)count;

@@ -8,9 +8,9 @@
 
 #include "ImageCache.h"
 
-ImageCache::ImageCache(Request *request)
+ImageCache::ImageCache(std::string accessToken)
 {
-    this->request = request;
+    this->accessToken = accessToken;
     cacheDir = std::string(getenv("HOME")) + "/.FacebookNotifications/cache";
     
     if (!boost::filesystem::exists(cacheDir)) {
@@ -43,7 +43,7 @@ void ImageCache::cache(const std::string userId)
     std::string filename = getFilename(userId);
     std::fstream picture(filename, std::ios::out | std::ios::binary);
     
-    request->request("/" + userId + "/picture", std::vector<std::string>{"width=128", "height=128"}, false, &picture);
+    Request::getInstance()->request("/" + userId + "/picture", Request::Params{Request::Param("width", "128"), Request::Param("height", "128"), Request::Param("access_token", accessToken)}, false, &picture);
     
     picture.close();
 }

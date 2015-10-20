@@ -16,20 +16,26 @@
 #include <vector>
 #include <mutex>
 #include "curlcpp/curl_easy.h"
+#include "Data.h"
 
 class Request
 {
 private:
-    const std::string BASE_URL = "https://graph.facebook.com";
+    static Request *self;
     
-    std::string accessToken;
+    Request();
     
 public:
+    typedef std::pair<std::string, std::string> Param;
+    typedef std::vector<Param> Params;
+    
     static std::mutex mutex;
     
-    Request(std::string);
-    void request(const std::string, std::vector<std::string>, bool, std::ostream *) throw(std::runtime_error);
+    ~Request();
+    static Request *getInstance();
+    void request(const std::string, Params, bool, std::ostream *) throw(std::runtime_error);
     void request(const std::string, std::ostream *) throw(std::runtime_error);
+    void request(const std::string, Params, std::ostream *) throw(std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__Request__) */

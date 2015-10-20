@@ -24,7 +24,6 @@
     
     Main::main(bridge);
     
-    //delete nativeBridge;
     //delete bridge;
 }
 

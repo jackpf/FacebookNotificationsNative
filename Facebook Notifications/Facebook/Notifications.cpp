@@ -18,7 +18,7 @@ void Notifications::reset()
 bool Notifications::containsNotification(Notification notificationToFind)
 {
     for(iterator it = begin(); it != end(); ++it) {
-        Notification notification = static_cast<Notification>(*it);
+        auto notification = static_cast<Notification>(*it);
         
         if (notification.get("id").compare(notificationToFind.get("id")) == 0 && notification.get("title").compare(notificationToFind.get("title")) == 0) {
             return true;
@@ -33,7 +33,7 @@ Notifications Notifications::getNew()
     Notifications newNotifications;
     
     for(iterator it = begin(); it != end(); ++it) {
-        Notification notification = static_cast<Notification>(*it);
+        auto notification = static_cast<Notification>(*it);
         
         if (!oldNotifications->containsNotification(notification)) {
             newNotifications.push_back(notification);

@@ -11,7 +11,7 @@
 std::string Notification::get(const std::string key)
 {
     for(iterator it = begin(); it != end(); ++it) {
-        std::pair<std::string, std::string> pv = static_cast<std::pair<std::string, std::string>>(*it);
+        auto pv = static_cast<std::pair<std::string, std::string>>(*it);
         
         if (key.compare(pv.first.data()) == 0) {
             return pv.second.data();

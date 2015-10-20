@@ -13,26 +13,30 @@ Request *Main::request;
 Parser *Main::parser;
 ImageCache *Main::cache;
 Notifications Main::notifications;
+std::string Main::accessToken;
 
 int Main::main(AppDelegateBridge *bridge)
 {
     Main::bridge = bridge;
+    bridge->addEvent("markNotificationRead", &markNotificationRead);
     bridge->addEvent("markNotificationsRead", &markNotificationsRead);
     
     AccessTokenStorage tokenStorage;
-    std::string accessToken = tokenStorage.read();
+    accessToken = tokenStorage.read();
+    //accessToken = tokenStorage.getAccessTokenFromCode(bridge->getInput("Code:"));
     
-    request = new Request(accessToken);
+    request = Request::getInstance();
+    cache = new ImageCache(accessToken);
     parser = new Parser;
-    cache = new ImageCache(request);
-    cache->prune();
+    
+    std::cout << "Pruned " << cache->prune() << " cached images" << std::endl;
     
     std::stringstream buffer;
     
     while (true) {
         try {
             request->mutex.lock();
-            request->request("/me/notifications", &buffer);
+            request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer);
             request->mutex.unlock();
             
             parser->parseNotifications(&buffer, &notifications);
@@ -43,7 +47,7 @@ int Main::main(AppDelegateBridge *bridge)
             bridge->updateNotificationCount(notifications.size());
             
             for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
-                Notification notification = static_cast<Notification>(*it);
+                auto notification = static_cast<Notification>(*it);
                 
                 bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache->fetch(notification.get("from_id")));
             }
@@ -52,7 +56,7 @@ int Main::main(AppDelegateBridge *bridge)
             bridge->alert(e.what());
         }
             
-        sleep(60);
+        std::this_thread::sleep_for(std::chrono::seconds(60));
     }
     
     //delete request;
@@ -62,6 +66,13 @@ int Main::main(AppDelegateBridge *bridge)
     return 0;
 }
 
+void Main::markNotificationRead(void *data)
+{
+    request->mutex.lock();
+    request->request("/" + *static_cast<std::string *>(data), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
+    request->mutex.unlock();
+}
+
 void Main::markNotificationsRead(void *data)
 {
     request->mutex.lock();
@@ -69,9 +80,9 @@ void Main::markNotificationsRead(void *data)
     int i = 0;
     
     for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
-        Notification notification = static_cast<Notification>(*it);
+        auto notification = static_cast<Notification>(*it);
         
-        request->request("/" + notification.get("id"), std::vector<std::string>{"unread=false"}, true, nullptr);
+        request->request("/" + notification.get("id"), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
         i++;
     }
     

@@ -14,17 +14,24 @@
 
 @implementation AppDelegateBridgeNative
 
-- (BOOL) userNotificationCenter :(NSUserNotificationCenter *)center
-       shouldPresentNotification:(NSUserNotification *)notification
+- (void) markNotificationReadThread :(NSString *) identifier
 {
-    return YES;
+    std::string str = [identifier UTF8String];
+    self.bridge->event("markNotificationRead", &str);
 }
 
 - (void) userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
 {
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:[self.notificationPaths objectForKey:notification.identifier]]];
+    [self performSelectorInBackground:@selector(markNotificationReadThread:) withObject:notification.identifier];
     [NSUserNotificationCenter.defaultUserNotificationCenter removeDeliveredNotification:notification];
     [self updateNotificationCount:self.notificationCount - 1];
+}
+
+- (void) handleAppleEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+{
+    NSString *urlString = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+    printf("URL: %s\n", [urlString UTF8String]);
 }
 
 - (AppDelegateBridgeNative *) init
@@ -57,6 +64,11 @@
         [self.exitMenuItem setTarget:self];
         
         self.statusBar.menu = self.menu;
+        
+        [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(handleAppleEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+        
+        //self.webView = [[WebViewWindowController alloc] initWithWindowNibName:@"WebView"];
+        //[self.webView showWindow:nil];
     }
     
     return self;
@@ -86,7 +98,6 @@
     notification.title = title;
     notification.informativeText = body;
     notification.contentImage = [[NSImage alloc] initWithContentsOfFile:image];
-    //[notification set_identityImage:[[NSImage alloc] initWithContentsOfFile:image]];
     [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
