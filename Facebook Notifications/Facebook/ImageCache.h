@@ -29,7 +29,7 @@ private:
     void cache(const std::string);
     
 public:
-    ImageCache(std::string);
+    ImageCache();
     int prune();
     std::string fetch(const std::string);
 };

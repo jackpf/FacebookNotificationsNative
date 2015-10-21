@@ -14,6 +14,6 @@
 #define CLIENT_SECRET   "436975f7333c19b5ef2d4e589c470a81"
 #define REDIRECT_URI    "https://www.facebook.com/connect/login_success.html"
 #define FB_OAUTH_URL    "https://www.facebook.com/dialog/oauth"
-#define FB_PERMISSIONS  "manage_notifications,read_mailbox"
+#define FB_PERMISSIONS  "manage_notifications"
 
 #endif

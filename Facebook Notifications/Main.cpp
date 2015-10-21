@@ -20,15 +20,12 @@ int Main::main(AppDelegateBridge *bridge)
     Main::bridge = bridge;
     bridge->addEvent("markNotificationRead", &markNotificationRead);
     bridge->addEvent("markNotificationsRead", &markNotificationsRead);
-    std::string code = bridge->retrieveAuthenticationCode();
-    std::cout<<"code:"<<code<<std::endl;
     
     AccessTokenStorage tokenStorage;
     accessToken = tokenStorage.read();
-    //accessToken = tokenStorage.getAccessTokenFromCode(bridge->getInput("Code:"));
     
     request = Request::getInstance();
-    cache = new ImageCache(accessToken);
+    cache = new ImageCache;
     parser = new Parser;
     
     std::cout << "Pruned " << cache->prune() << " cached images" << std::endl;
@@ -37,9 +34,7 @@ int Main::main(AppDelegateBridge *bridge)
     
     while (true) {
         try {
-            request->mutex.lock();
-            request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer);
-            request->mutex.unlock();
+            request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
             
             parser->parseNotifications(&buffer, &notifications);
             Notifications newNotifications = notifications.getNew();
@@ -53,13 +48,26 @@ int Main::main(AppDelegateBridge *bridge)
                 
                 bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache->fetch(notification.get("from_id")));
             }
-        } catch (std::runtime_error e) {
-            request->mutex.unlock();
-            std::cout << "Caught exception: " << e.what() << std::endl;
+        } catch (const FacebookDefaultException *e) {
+            if (auto real = dynamic_cast<const FacebookLoginException *>(e)) {
+                std::cout << "Login error: " << real->what() << std::endl;
+                
+                std::string code = tokenStorage.getCodeFromUrl(bridge->retrieveAuthenticationCode());
+                accessToken = tokenStorage.getAccessTokenFromCode(code);
+                tokenStorage.store(accessToken);
+            } else {
+                std::string errMsg = std::string("Facebook error: ") + e->what();
+                std::cout << errMsg << std::endl;
+                bridge->alert(errMsg);
+            }
+            delete e;
+        } catch (const std::runtime_error &e) {
+            std::string errMsg = std::string("Runtime error: ") + e.what();
+            std::cout << errMsg << std::endl;
             bridge->alert(e.what());
         }
             
-        std::this_thread::sleep_for(std::chrono::seconds(60));
+        std::this_thread::sleep_for(std::chrono::seconds(10));
     }
     
     //delete request;
@@ -71,9 +79,7 @@ int Main::main(AppDelegateBridge *bridge)
 
 void Main::markNotificationRead(void *data)
 {
-    request->mutex.lock();
-    request->request("/" + *static_cast<std::string *>(data), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
-    request->mutex.unlock();
+    request->request("/" + *static_cast<std::string *>(data), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr, true);
 }
 
 void Main::markNotificationsRead(void *data)
@@ -85,7 +91,7 @@ void Main::markNotificationsRead(void *data)
     for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
         auto notification = static_cast<Notification>(*it);
         
-        request->request("/" + notification.get("id"), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
+        request->request("/" + notification.get("id"), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr, false /*no auto lock*/);
         i++;
     }
     

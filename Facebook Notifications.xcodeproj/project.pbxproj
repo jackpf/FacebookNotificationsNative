@@ -52,6 +52,7 @@
 		DD3661CC1BC7B8F40000D2ED /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegateBridge.mm; sourceTree = "<group>"; };
 		DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegateBridge.h; sourceTree = "<group>"; };
+		DD7E90391BD7826C00E81D36 /* FacebookException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookException.h; sourceTree = "<group>"; };
 		DD98E31E1BD4F6CE00EDB70E /* Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageCache.cpp; sourceTree = "<group>"; };
 		DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 				DDF0C16A1BD0F575007F13AA /* AccessTokenStorage.h */,
 				DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */,
 				DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */,
+				DD7E90391BD7826C00E81D36 /* FacebookException.h */,
 				DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */,
 				DD9AB98E1BCD5DE500AE6B38 /* Notification.h */,
 				DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */,

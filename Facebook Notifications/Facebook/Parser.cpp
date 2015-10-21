@@ -8,16 +8,16 @@
 
 #include "Parser.h"
 
-void Parser::parseJson(std::stringstream *json, boost::property_tree::ptree *pt) throw(std::runtime_error)
+void Parser::parseJson(std::stringstream *json, boost::property_tree::ptree *pt) throw(FacebookDefaultException *, std::runtime_error)
 {
     boost::property_tree::read_json(*json, *pt);
     
     if (pt->count("error") > 0) {
-        throw std::runtime_error("Facebook error: " + pt->get<std::string>("error.message")); // Should be FacebookException
+        throw FacebookException::createFromErrorMessage(pt->get<std::string>("error.message"));
     }
 }
 
-void Parser::parseNotifications(std::stringstream *json, Notifications *data) throw(std::runtime_error)
+void Parser::parseNotifications(std::stringstream *json, Notifications *data) throw(FacebookDefaultException *, std::runtime_error)
 {
     boost::property_tree::ptree pt;
     parseJson(json, &pt);

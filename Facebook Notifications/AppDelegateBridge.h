@@ -35,6 +35,7 @@ class AppDelegateBridge;
 - (AppDelegateBridgeNative *) init;
 - (AppDelegateBridgeNative *) initWithWindow :(NSWindow *)window :(WebView *)webView;
 - (void) promptAuthenticationCode;
+- (NSString *) consumeAuthenticationCode;
 - (void) updateNotificationCount :(unsigned long)count;
 - (void) notify :(NSString *)identifier :(NSString *)title :(NSString *)body :(NSString *) path :(NSString *)image;
 - (void) getInput :(NSString *)prompt :(NSString **) r;

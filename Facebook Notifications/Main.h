@@ -15,6 +15,7 @@
 #include "Parser.h"
 #include "ImageCache.h"
 #include "AccessTokenStorage.h"
+#include "FacebookException.h"
 
 class Main
 {

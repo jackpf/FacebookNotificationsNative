@@ -33,9 +33,9 @@ public:
     
     ~Request();
     static Request *getInstance();
-    void request(const std::string, Params, bool, std::ostream *) throw(std::runtime_error);
-    void request(const std::string, std::ostream *) throw(std::runtime_error);
-    void request(const std::string, Params, std::ostream *) throw(std::runtime_error);
+    void request(const std::string, Params, bool, std::ostream *, bool) throw(std::runtime_error);
+    void request(const std::string, std::ostream *, bool) throw(std::runtime_error);
+    void request(const std::string, Params, std::ostream *, bool) throw(std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__Request__) */

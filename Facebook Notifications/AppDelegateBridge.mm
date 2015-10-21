@@ -8,10 +8,6 @@
 
 #include "AppDelegateBridge.h"
 
-@interface NSUserNotification (CFIPrivate)
-- (void)set_identityImage:(NSImage *)image;
-@end
-
 @implementation AppDelegateBridgeNative
 
 - (void) markNotificationReadThread :(NSString *) identifier
@@ -38,11 +34,28 @@
     }
 }
 
+- (NSString *) consumeAuthenticationCode
+{
+    if (self.authenticationCodeBuffer.length == 0) {
+        return @"";
+    } else {
+        NSString *r = self.authenticationCodeBuffer;
+        self.authenticationCodeBuffer = @"";
+        return r;
+    }
+}
+
 - (void) promptAuthenticationCode
 {
     [self.window setIsVisible:TRUE];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s?client_id=%s&redirect_uri=%s&scope=%s", FB_OAUTH_URL, CLIENT_ID, REDIRECT_URI, FB_PERMISSIONS]];
+    
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
     [self.window setContentView:self.webView];
@@ -200,11 +213,14 @@ std::string AppDelegateBridge::retrieveAuthenticationCode()
         [bridge promptAuthenticationCode];
     });
     
-    while (bridge.authenticationCodeBuffer.length == 0) {
+    std::string code;
+    
+    while (code.length() == 0) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        code = [[bridge consumeAuthenticationCode] UTF8String];
     }
     
-    return [bridge.authenticationCodeBuffer UTF8String];
+    return code;
 }
 
 void AppDelegateBridge::alert(std::string prompt)

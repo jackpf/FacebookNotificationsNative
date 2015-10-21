@@ -18,14 +18,15 @@
 #include <boost/foreach.hpp>
 #include "Request.h"
 #include "Notifications.h"
+#include "FacebookException.h"
 
 class Parser
 {
 private:
-    void parseJson(std::stringstream *, boost::property_tree::ptree *) throw(std::runtime_error);
+    void parseJson(std::stringstream *, boost::property_tree::ptree *) throw(FacebookDefaultException *, std::runtime_error);
     
 public:
-    void parseNotifications(std::stringstream *, Notifications *) throw(std::runtime_error);
+    void parseNotifications(std::stringstream *, Notifications *) throw(FacebookDefaultException *, std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__Parser__) */
