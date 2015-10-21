@@ -22,8 +22,6 @@
 		DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9911BCD5DE500AE6B38 /* Parser.cpp */; };
 		DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9931BCD5DE500AE6B38 /* Request.cpp */; };
 		DD9D2C421BD53C9600DC30A6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD9D2C411BD53C9600DC30A6 /* WebKit.framework */; };
-		DDBA631F1BD53018003049D6 /* WebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDBA631E1BD53018003049D6 /* WebViewWindowController.m */; };
-		DDBA63221BD5305E003049D6 /* WebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDBA63201BD5305E003049D6 /* WebView.xib */; };
 		DDF0C16B1BD0F575007F13AA /* AccessTokenStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDF0C1691BD0F575007F13AA /* AccessTokenStorage.cpp */; };
 /* End PBXBuildFile section */
 
@@ -66,9 +64,6 @@
 		DD9AB9931BCD5DE500AE6B38 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
 		DD9AB9941BCD5DE500AE6B38 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
 		DD9D2C411BD53C9600DC30A6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		DDBA631E1BD53018003049D6 /* WebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewWindowController.m; sourceTree = "<group>"; };
-		DDBA63211BD5305E003049D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = WebView.xib; sourceTree = "<group>"; };
-		DDBA63241BD530A7003049D6 /* WebViewWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewWindowController.h; sourceTree = "<group>"; };
 		DDF0C1691BD0F575007F13AA /* AccessTokenStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AccessTokenStorage.cpp; sourceTree = "<group>"; };
 		DDF0C16A1BD0F575007F13AA /* AccessTokenStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessTokenStorage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,7 +91,6 @@
 		DD1CE0A61BD15095006D44D5 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				DDBA63201BD5305E003049D6 /* WebView.xib */,
 				DD1CE0A71BD15095006D44D5 /* MainMenu.xib */,
 			);
 			path = Base.lproj;
@@ -132,8 +126,6 @@
 				DD36619F1BC7AEB00000D2ED /* AppDelegate.mm */,
 				DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */,
 				DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */,
-				DDBA631E1BD53018003049D6 /* WebViewWindowController.m */,
-				DDBA63241BD530A7003049D6 /* WebViewWindowController.h */,
 				DD3661A31BC7AEB00000D2ED /* Images.xcassets */,
 				DD3661A51BC7AEB00000D2ED /* MainMenu.xib */,
 				DD1CE0A61BD15095006D44D5 /* Base.lproj */,
@@ -269,7 +261,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD3661A41BC7AEB00000D2ED /* Images.xcassets in Resources */,
-				DDBA63221BD5305E003049D6 /* WebView.xib in Resources */,
 				DD3661A71BC7AEB00000D2ED /* MainMenu.xib in Resources */,
 				DD1CE0A91BD15095006D44D5 /* MainMenu.xib in Resources */,
 			);
@@ -299,7 +290,6 @@
 				DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */,
 				DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */,
 				DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */,
-				DDBA631F1BD53018003049D6 /* WebViewWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,14 +326,6 @@
 				DD3661A61BC7AEB00000D2ED /* Base */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		DDBA63201BD5305E003049D6 /* WebView.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DDBA63211BD5305E003049D6 /* Base */,
-			);
-			name = WebView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

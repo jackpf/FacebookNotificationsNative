@@ -20,6 +20,8 @@ int Main::main(AppDelegateBridge *bridge)
     Main::bridge = bridge;
     bridge->addEvent("markNotificationRead", &markNotificationRead);
     bridge->addEvent("markNotificationsRead", &markNotificationsRead);
+    std::string code = bridge->retrieveAuthenticationCode();
+    std::cout<<"code:"<<code<<std::endl;
     
     AccessTokenStorage tokenStorage;
     accessToken = tokenStorage.read();
@@ -52,6 +54,7 @@ int Main::main(AppDelegateBridge *bridge)
                 bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache->fetch(notification.get("from_id")));
             }
         } catch (std::runtime_error e) {
+            request->mutex.unlock();
             std::cout << "Caught exception: " << e.what() << std::endl;
             bridge->alert(e.what());
         }

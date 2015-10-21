@@ -34,16 +34,5 @@
 	<true/>
 	<key>LSBackgroundOnly</key>
 	<true/>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>Facebook Notifications</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>facebook</string>
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>

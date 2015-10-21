@@ -28,10 +28,32 @@
     [self updateNotificationCount:self.notificationCount - 1];
 }
 
-- (void) handleAppleEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-    NSString *urlString = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
-    printf("URL: %s\n", [urlString UTF8String]);
+    NSString *url = [[[[frame dataSource] request] URL] absoluteString];
+    
+    if ([url hasPrefix:@REDIRECT_URI]) {
+        self.authenticationCodeBuffer = url;
+        [self.window setIsVisible:FALSE];
+    }
+}
+
+- (void) promptAuthenticationCode
+{
+    [self.window setIsVisible:TRUE];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s?client_id=%s&redirect_uri=%s&scope=%s", FB_OAUTH_URL, CLIENT_ID, REDIRECT_URI, FB_PERMISSIONS]];
+    
+    [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
+    [self.window setContentView:self.webView];
+}
+
+- (AppDelegateBridgeNative *) initWithWindow:(NSWindow *)window :(WebView *)webView
+{
+    self.window = window;
+    self.webView = webView;
+    [self.webView setFrameLoadDelegate:self];
+    return [self init];
 }
 
 - (AppDelegateBridgeNative *) init
@@ -64,11 +86,6 @@
         [self.exitMenuItem setTarget:self];
         
         self.statusBar.menu = self.menu;
-        
-        [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(handleAppleEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
-        
-        //self.webView = [[WebViewWindowController alloc] initWithWindowNibName:@"WebView"];
-        //[self.webView showWindow:nil];
     }
     
     return self;
@@ -175,6 +192,19 @@ std::string AppDelegateBridge::getInput(std::string prompt)
     });
     
     return [r UTF8String];
+}
+
+std::string AppDelegateBridge::retrieveAuthenticationCode()
+{
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [bridge promptAuthenticationCode];
+    });
+    
+    while (bridge.authenticationCodeBuffer.length == 0) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+    
+    return [bridge.authenticationCodeBuffer UTF8String];
 }
 
 void AppDelegateBridge::alert(std::string prompt)

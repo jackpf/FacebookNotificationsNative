@@ -11,10 +11,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "WebViewWindowController.h"
 #include <iostream>
 #include <unordered_map>
 #include <thread>
+#import <WebKit/WebKit.h>
+#include "Data.h"
 
 class AppDelegateBridge;
 
@@ -29,8 +30,11 @@ class AppDelegateBridge;
 @property unsigned long notificationCount;
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet WebView *webView;
+@property (strong, nonatomic) NSString *authenticationCodeBuffer;
 
 - (AppDelegateBridgeNative *) init;
+- (AppDelegateBridgeNative *) initWithWindow :(NSWindow *)window :(WebView *)webView;
+- (void) promptAuthenticationCode;
 - (void) updateNotificationCount :(unsigned long)count;
 - (void) notify :(NSString *)identifier :(NSString *)title :(NSString *)body :(NSString *) path :(NSString *)image;
 - (void) getInput :(NSString *)prompt :(NSString **) r;
@@ -54,6 +58,7 @@ public:
     void notify(std::string, std::string, std::string, std::string, std::string = "");
     std::string getInput(std::string);
     void alert(std::string);
+    std::string retrieveAuthenticationCode();
     
     void addEvent(std::string, EventCallback);
     void removeEvent(std::string);
