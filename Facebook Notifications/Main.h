@@ -27,6 +27,7 @@ private:
     static AccessTokenStorage *tokenStorage;
     static Notifications notifications;
     static std::string accessToken;
+    static User user;
     
 public:
     static int main(AppDelegateBridge *);

@@ -11,7 +11,23 @@
 
 #include <iostream>
 #include <vector>
-#include "Notification.h"
+
+enum NotificationType
+{
+    NOTIFICATION,
+    MESSAGE
+};
+
+struct Notification
+{
+    std::string id;
+    std::string title;
+    std::string body;
+    std::string from;
+    std::string link;
+    std::time_t updatedAt;
+    NotificationType type;
+};
 
 class Notifications : public std::vector<Notification>
 {

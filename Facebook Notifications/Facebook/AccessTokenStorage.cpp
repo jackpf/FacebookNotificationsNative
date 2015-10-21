@@ -47,7 +47,7 @@ std::string AccessTokenStorage::getCodeFromUrl(std::string url) throw(FacebookLo
         throw new FacebookLoginException(FacebookException::urlDecode(errorMatch[1]));
     }
     
-    std::regex codeRgx("[?|&]code=([\\w|-|_]+)");
+    std::regex codeRgx("[?|&]code=([\\w|\\-|_]+)");
     std::smatch codeMatch;
     
     if (!std::regex_search(url, codeMatch, codeRgx) || codeMatch.length() < 1) {

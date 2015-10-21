@@ -19,14 +19,18 @@
 #include "Request.h"
 #include "Notifications.h"
 #include "FacebookException.h"
+#include "User.h"
 
 class Parser
 {
 private:
     void parseJson(std::stringstream *, boost::property_tree::ptree *) throw(FacebookDefaultException *, std::runtime_error);
+    std::time_t convertDate(std::string);
     
 public:
     void parseNotifications(std::stringstream *, Notifications *) throw(FacebookDefaultException *, std::runtime_error);
+    void parseUnreadMessages(std::stringstream *, Notifications *, std::time_t, User) throw(FacebookDefaultException *, std::runtime_error);
+    void parseUser(std::stringstream *, User *) throw(FacebookDefaultException *, std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__Parser__) */

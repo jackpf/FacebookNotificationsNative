@@ -16,7 +16,6 @@
 		DD3661CD1BC7B8F40000D2ED /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3661CC1BC7B8F40000D2ED /* AppKit.framework */; };
 		DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */; };
 		DD9AB9971BCD5DE500AE6B38 /* ImageCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */; };
-		DD9AB9981BCD5DE500AE6B38 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */; };
 		DD9AB9991BCD5DE500AE6B38 /* Notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */; };
 		DD9AB99A1BCD5DE500AE6B38 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9911BCD5DE500AE6B38 /* Parser.cpp */; };
 		DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB9931BCD5DE500AE6B38 /* Request.cpp */; };
@@ -36,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		DD1CE0A81BD15095006D44D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = MainMenu.xib; sourceTree = "<group>"; };
+		DD251A241BD7DCBD0043A747 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		DD3661991BC7AEB00000D2ED /* Facebook Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Facebook Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD36619D1BC7AEB00000D2ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD36619E1BC7AEB00000D2ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,8 +54,6 @@
 		DD98E31E1BD4F6CE00EDB70E /* Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageCache.cpp; sourceTree = "<group>"; };
 		DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
-		DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notification.cpp; sourceTree = "<group>"; };
-		DD9AB98E1BCD5DE500AE6B38 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Notifications.cpp; sourceTree = "<group>"; };
 		DD9AB9901BCD5DE500AE6B38 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		DD9AB9911BCD5DE500AE6B38 /* Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
@@ -166,8 +164,6 @@
 				DD9AB98B1BCD5DE500AE6B38 /* ImageCache.cpp */,
 				DD9AB98C1BCD5DE500AE6B38 /* ImageCache.h */,
 				DD7E90391BD7826C00E81D36 /* FacebookException.h */,
-				DD9AB98D1BCD5DE500AE6B38 /* Notification.cpp */,
-				DD9AB98E1BCD5DE500AE6B38 /* Notification.h */,
 				DD9AB98F1BCD5DE500AE6B38 /* Notifications.cpp */,
 				DD9AB9901BCD5DE500AE6B38 /* Notifications.h */,
 				DD9AB9911BCD5DE500AE6B38 /* Parser.cpp */,
@@ -175,6 +171,7 @@
 				DD9AB9931BCD5DE500AE6B38 /* Request.cpp */,
 				DD9AB9941BCD5DE500AE6B38 /* Request.h */,
 				DD98E31E1BD4F6CE00EDB70E /* Data.h */,
+				DD251A241BD7DCBD0043A747 /* User.h */,
 			);
 			path = Facebook;
 			sourceTree = "<group>";
@@ -278,7 +275,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD9AB9981BCD5DE500AE6B38 /* Notification.cpp in Sources */,
 				DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */,
 				DD9AB99B1BCD5DE500AE6B38 /* Request.cpp in Sources */,
 				DD530AE41BC7DA8D00194065 /* AppDelegateBridge.mm in Sources */,
