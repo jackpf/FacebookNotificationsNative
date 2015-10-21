@@ -38,21 +38,28 @@ AccessTokenStorage::~AccessTokenStorage()
     }
 }
 
-std::string AccessTokenStorage::getCodeFromUrl(std::string url) throw(std::runtime_error)
+std::string AccessTokenStorage::getCodeFromUrl(std::string url) throw(FacebookLoginException *)
 {
-    std::regex rgx("code=((\\w|-|_)+)");
-    std::smatch match;
+    std::regex errorRgx("[?|&]error_description=([\\w\\+]+)");
+    std::smatch errorMatch;
     
-    if (!std::regex_search(url, match, rgx) || match.length() < 1) {
-        throw std::runtime_error("Unable to extract code");
+    if (std::regex_search(url, errorMatch, errorRgx)) {
+        throw new FacebookLoginException(FacebookException::urlDecode(errorMatch[1]));
     }
     
-    std::cout << "Code: " << match[1] << std::endl;
+    std::regex codeRgx("[?|&]code=((\\w|-|_)+)");
+    std::smatch codeMatch;
     
-    return match[1];
+    if (!std::regex_search(url, codeMatch, codeRgx) || codeMatch.length() < 1) {
+        throw new FacebookLoginException("Unable to extract code");
+    }
+    
+    std::cout << "Code: " << codeMatch[1] << std::endl;
+    
+    return codeMatch[1];
 }
 
-std::string AccessTokenStorage::getAccessTokenFromCode(std::string code) throw(std::runtime_error)
+std::string AccessTokenStorage::getAccessTokenFromCode(std::string code) throw(FacebookLoginException *)
 {
     std::stringstream buffer;
     
@@ -63,7 +70,7 @@ std::string AccessTokenStorage::getAccessTokenFromCode(std::string code) throw(s
     
     std::string str = buffer.str();
     if (!std::regex_search(str, match, rgx) || match.length() < 1) {
-        throw std::runtime_error("Unable to extract access token");
+        throw new FacebookLoginException("Unable to extract access token");
     }
     
     std::cout << "Access token: " << match[1] << std::endl;

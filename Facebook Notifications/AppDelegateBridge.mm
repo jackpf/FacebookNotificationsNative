@@ -28,6 +28,8 @@
 {
     NSString *url = [[[[frame dataSource] request] URL] absoluteString];
     
+    printf("Request URL: %s\n", [url UTF8String]);
+    
     if ([url hasPrefix:@REDIRECT_URI]) {
         self.authenticationCodeBuffer = url;
         [self.window setIsVisible:FALSE];
@@ -49,7 +51,7 @@
 {
     [self.window setIsVisible:TRUE];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s?client_id=%s&redirect_uri=%s&scope=%s", FB_OAUTH_URL, CLIENT_ID, REDIRECT_URI, FB_PERMISSIONS]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s?client_id=%s&redirect_uri=%s&scope=%s&display=popup", FB_OAUTH_URL, CLIENT_ID, REDIRECT_URI, FB_PERMISSIONS]];
     
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (NSHTTPCookie *cookie in [storage cookies]) {
@@ -65,7 +67,11 @@
 {
     self.window = window;
     self.webView = webView;
+    
+    [self.window setLevel:NSFloatingWindowLevel];
+    [NSApp activateIgnoringOtherApps:YES];
     [self.webView setFrameLoadDelegate:self];
+    
     return [self init];
 }
 

@@ -18,6 +18,7 @@
 #include <mutex>
 #include "Request.h"
 #include "Data.h"
+#include "FacebookException.h"
 
 class AccessTokenStorage
 {
@@ -33,8 +34,8 @@ public:
     static AccessTokenStorage *getInstance();
     void store(std::string);
     std::string read();
-    std::string getAccessTokenFromCode(std::string) throw(std::runtime_error);
-    std::string getCodeFromUrl(std::string) throw(std::runtime_error);
+    std::string getCodeFromUrl(std::string) throw(FacebookLoginException *);
+    std::string getAccessTokenFromCode(std::string) throw(FacebookLoginException *);
 };
 
 #endif /* defined(__Facebook_Notifications__AccessTokenStorage__) */

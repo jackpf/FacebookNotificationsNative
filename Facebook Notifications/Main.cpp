@@ -45,7 +45,7 @@ int Main::main(AppDelegateBridge *bridge)
                 bridge->notify(notification.get("id"), notification.get("from"), notification.get("title"), notification.get("link"), cache->fetch(notification.get("from_id")));
             }
         } catch (const FacebookDefaultException *e) {
-            if (auto real = dynamic_cast<const FacebookLoginException *>(e)) {
+            if (auto real = dynamic_cast<const FacebookAuthenticationException *>(e)) {
                 std::cout << "Login error: " << real->what() << std::endl;
                 reauthenticate(nullptr);
             } else {
@@ -57,7 +57,7 @@ int Main::main(AppDelegateBridge *bridge)
         } catch (const std::runtime_error &e) {
             std::string errMsg = std::string("Runtime error: ") + e.what();
             std::cout << errMsg << std::endl;
-            bridge->alert(e.what());
+            bridge->alert(errMsg);
         }
             
         std::this_thread::sleep_for(std::chrono::seconds(60));
@@ -68,9 +68,16 @@ int Main::main(AppDelegateBridge *bridge)
 
 void Main::reauthenticate(void *data)
 {
-    std::string code = tokenStorage->getCodeFromUrl(bridge->retrieveAuthenticationCode());
-    accessToken = tokenStorage->getAccessTokenFromCode(code);
-    tokenStorage->store(accessToken);
+    try {
+        std::string code = tokenStorage->getCodeFromUrl(bridge->retrieveAuthenticationCode());
+        accessToken = tokenStorage->getAccessTokenFromCode(code);
+        tokenStorage->store(accessToken);
+    } catch (FacebookLoginException *e) {
+        std::string errMsg = std::string("Login error: ") + e->what();
+        std::cout << errMsg << std::endl;
+        bridge->alert(errMsg);
+        delete e;
+    }
 }
 
 void Main::markNotificationRead(void *data)
