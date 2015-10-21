@@ -93,6 +93,12 @@
         
         [self.menu addItem:[NSMenuItem separatorItem]];
         
+        self.reauthenticateMenuItem = [self.menu addItemWithTitle:@"Change user"
+                                                           action:@selector(reauthenticate)
+                                                    keyEquivalent:@""];
+        self.markNotificationsReadMenuItem.enabled = true;
+        [self.markNotificationsReadMenuItem setTarget:self];
+        
         self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
                                                  action:@selector(exit)
                                           keyEquivalent:@""];
@@ -102,6 +108,16 @@
     }
     
     return self;
+}
+
+- (void) reauthenticateThread
+{
+    self.bridge->event("reauthenticate");
+}
+
+- (void) reauthenticate
+{
+    [self performSelectorInBackground:@selector(reauthenticateThread) withObject:nil];
 }
 
 - (void) updateNotificationCount :(unsigned long) count

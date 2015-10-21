@@ -8,6 +8,9 @@
 
 #include "AccessTokenStorage.h"
 
+std::mutex AccessTokenStorage::mutex;
+AccessTokenStorage *AccessTokenStorage::self;
+
 AccessTokenStorage::AccessTokenStorage()
 {
     std::string storageFileDir = std::string(getenv("HOME")) + "/.FacebookNotifications";
@@ -17,6 +20,22 @@ AccessTokenStorage::AccessTokenStorage()
     }
     
     storageFile = storageFileDir + "/access_token";
+}
+
+AccessTokenStorage *AccessTokenStorage::getInstance()
+{
+    if (self == nullptr) {
+        self = new AccessTokenStorage;
+    }
+    
+    return self;
+}
+
+AccessTokenStorage::~AccessTokenStorage()
+{
+    if (self != nullptr) {
+        delete self;
+    }
 }
 
 std::string AccessTokenStorage::getCodeFromUrl(std::string url) throw(std::runtime_error)
@@ -54,6 +73,8 @@ std::string AccessTokenStorage::getAccessTokenFromCode(std::string code) throw(s
 
 void AccessTokenStorage::store(std::string accessToken)
 {
+    std::lock_guard<std::mutex> lock(mutex);
+    
     std::ofstream out(storageFile);
     out << accessToken;
     out.close();
@@ -61,6 +82,8 @@ void AccessTokenStorage::store(std::string accessToken)
 
 std::string AccessTokenStorage::read()
 {
+    std::lock_guard<std::mutex> lock(mutex);
+    
     std::string accessToken;
     
     std::ifstream in(storageFile, std::ios::in);

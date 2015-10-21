@@ -25,7 +25,7 @@ class AppDelegateBridge;
 @property (strong, nonatomic) NSStatusItem *statusBar;
 @property (nonatomic) NSZone *menuZone;
 @property (strong, nonatomic) NSMenu *menu;
-@property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *settingsMenuItem, *exitMenuItem;
+@property (strong, nonatomic) NSMenuItem *markNotificationsReadMenuItem, *reauthenticateMenuItem, *exitMenuItem;
 @property (strong, nonatomic) NSMutableDictionary *notificationPaths;
 @property unsigned long notificationCount;
 @property (assign) IBOutlet NSWindow *window;

@@ -11,7 +11,6 @@
 		DD3661A01BC7AEB00000D2ED /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD36619F1BC7AEB00000D2ED /* AppDelegate.mm */; };
 		DD3661A21BC7AEB00000D2ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3661A11BC7AEB00000D2ED /* main.m */; };
 		DD3661A41BC7AEB00000D2ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD3661A31BC7AEB00000D2ED /* Images.xcassets */; };
-		DD3661A71BC7AEB00000D2ED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DD3661A51BC7AEB00000D2ED /* MainMenu.xib */; };
 		DD3661B31BC7AEB00000D2ED /* Facebook_NotificationsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3661B21BC7AEB00000D2ED /* Facebook_NotificationsTests.m */; };
 		DD3661BF1BC7AF040000D2ED /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD3661BE1BC7AF040000D2ED /* Main.cpp */; };
 		DD3661CD1BC7B8F40000D2ED /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD3661CC1BC7B8F40000D2ED /* AppKit.framework */; };
@@ -43,7 +42,6 @@
 		DD36619F1BC7AEB00000D2ED /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		DD3661A11BC7AEB00000D2ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DD3661A31BC7AEB00000D2ED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DD3661A61BC7AEB00000D2ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		DD3661AC1BC7AEB00000D2ED /* Facebook NotificationsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Facebook NotificationsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3661B11BC7AEB00000D2ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD3661B21BC7AEB00000D2ED /* Facebook_NotificationsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Facebook_NotificationsTests.m; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 				DD530AE51BC7DA9A00194065 /* AppDelegateBridge.h */,
 				DD530AE31BC7DA8D00194065 /* AppDelegateBridge.mm */,
 				DD3661A31BC7AEB00000D2ED /* Images.xcassets */,
-				DD3661A51BC7AEB00000D2ED /* MainMenu.xib */,
 				DD1CE0A61BD15095006D44D5 /* Base.lproj */,
 				DD36619C1BC7AEB00000D2ED /* Supporting Files */,
 			);
@@ -263,7 +260,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD3661A41BC7AEB00000D2ED /* Images.xcassets in Resources */,
-				DD3661A71BC7AEB00000D2ED /* MainMenu.xib in Resources */,
 				DD1CE0A91BD15095006D44D5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,14 +314,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				DD1CE0A81BD15095006D44D5 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		DD3661A51BC7AEB00000D2ED /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DD3661A61BC7AEB00000D2ED /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

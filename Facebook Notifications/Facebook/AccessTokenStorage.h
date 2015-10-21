@@ -15,16 +15,22 @@
 #include <boost/filesystem.hpp>
 #include <map>
 #include <regex>
+#include <mutex>
 #include "Request.h"
 #include "Data.h"
 
 class AccessTokenStorage
 {
 private:
+    static AccessTokenStorage *self;
     std::string storageFile;
+    static std::mutex mutex;
+    
+    AccessTokenStorage();
     
 public:
-    AccessTokenStorage();
+    ~AccessTokenStorage();
+    static AccessTokenStorage *getInstance();
     void store(std::string);
     std::string read();
     std::string getAccessTokenFromCode(std::string) throw(std::runtime_error);

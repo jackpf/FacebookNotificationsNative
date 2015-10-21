@@ -8,28 +8,24 @@
 
 #include "Main.h"
 
-AppDelegateBridge *Main::bridge;
-Request *Main::request;
-Parser *Main::parser;
-ImageCache *Main::cache;
-Notifications Main::notifications;
-std::string Main::accessToken;
+AppDelegateBridge   *Main::bridge;
+Request             *Main::request      = Request::getInstance();
+Parser              *Main::parser       = new Parser;
+ImageCache          *Main::cache        = new ImageCache;
+AccessTokenStorage  *Main::tokenStorage = AccessTokenStorage::getInstance();
+Notifications       Main::notifications;
+std::string         Main::accessToken;
 
 int Main::main(AppDelegateBridge *bridge)
 {
     Main::bridge = bridge;
     bridge->addEvent("markNotificationRead", &markNotificationRead);
     bridge->addEvent("markNotificationsRead", &markNotificationsRead);
-    
-    AccessTokenStorage tokenStorage;
-    accessToken = tokenStorage.read();
-    
-    request = Request::getInstance();
-    cache = new ImageCache;
-    parser = new Parser;
+    bridge->addEvent("reauthenticate", &reauthenticate);
     
     std::cout << "Pruned " << cache->prune() << " cached images" << std::endl;
     
+    accessToken = tokenStorage->read();
     std::stringstream buffer;
     
     while (true) {
@@ -51,10 +47,7 @@ int Main::main(AppDelegateBridge *bridge)
         } catch (const FacebookDefaultException *e) {
             if (auto real = dynamic_cast<const FacebookLoginException *>(e)) {
                 std::cout << "Login error: " << real->what() << std::endl;
-                
-                std::string code = tokenStorage.getCodeFromUrl(bridge->retrieveAuthenticationCode());
-                accessToken = tokenStorage.getAccessTokenFromCode(code);
-                tokenStorage.store(accessToken);
+                reauthenticate(nullptr);
             } else {
                 std::string errMsg = std::string("Facebook error: ") + e->what();
                 std::cout << errMsg << std::endl;
@@ -67,14 +60,17 @@ int Main::main(AppDelegateBridge *bridge)
             bridge->alert(e.what());
         }
             
-        std::this_thread::sleep_for(std::chrono::seconds(10));
+        std::this_thread::sleep_for(std::chrono::seconds(60));
     }
     
-    //delete request;
-    //delete parser;
-    //delete cache;
-    
     return 0;
+}
+
+void Main::reauthenticate(void *data)
+{
+    std::string code = tokenStorage->getCodeFromUrl(bridge->retrieveAuthenticationCode());
+    accessToken = tokenStorage->getAccessTokenFromCode(code);
+    tokenStorage->store(accessToken);
 }
 
 void Main::markNotificationRead(void *data)

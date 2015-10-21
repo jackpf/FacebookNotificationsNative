@@ -24,6 +24,7 @@ private:
     static Request *request;
     static Parser *parser;
     static ImageCache *cache;
+    static AccessTokenStorage *tokenStorage;
     static Notifications notifications;
     static std::string accessToken;
     
@@ -31,6 +32,7 @@ public:
     static int main(AppDelegateBridge *);
     static void markNotificationRead(void *);
     static void markNotificationsRead(void *);
+    static void reauthenticate(void *);
 };
 
 #endif
