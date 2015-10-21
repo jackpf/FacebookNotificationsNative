@@ -102,8 +102,8 @@
         self.reauthenticateMenuItem = [self.menu addItemWithTitle:@"Change user"
                                                            action:@selector(reauthenticate)
                                                     keyEquivalent:@""];
-        self.markNotificationsReadMenuItem.enabled = true;
-        [self.markNotificationsReadMenuItem setTarget:self];
+        self.reauthenticateMenuItem.enabled = true;
+        [self.reauthenticateMenuItem setTarget:self];
         
         self.exitMenuItem = [self.menu addItemWithTitle:@"Exit"
                                                  action:@selector(exit)
