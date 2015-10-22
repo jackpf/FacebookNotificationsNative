@@ -8,15 +8,16 @@
 
 #include "Main.h"
 
-AppDelegateBridge   *Main::bridge;
-Request             *Main::request          = Request::getInstance();
-Parser              *Main::parser           = new Parser;
-ImageCache          *Main::cache            = new ImageCache;
-AccessTokenStorage  *Main::tokenStorage     = AccessTokenStorage::getInstance();
-Notifications       Main::notifications;
-std::string         Main::accessToken;
-User                Main::user;
-std::size_t         Main::readMessagesTime  = 0; // Should be persisted to file?
+AppDelegateBridge       *Main::bridge;
+Request                 *Main::request          = Request::getInstance();
+Parser                  *Main::parser           = new Parser;
+ImageCache              *Main::cache            = new ImageCache;
+AccessTokenStorage      *Main::tokenStorage     = AccessTokenStorage::getInstance();
+Notifications           Main::notifications;
+std::string             Main::accessToken;
+User                    Main::user;
+std::size_t             Main::readMessagesTime  = 0; // Should be persisted to file?
+std::chrono::minutes    Main::updateTime        = std::chrono::minutes(INITIAL_UPDATE_TIME);
 
 int Main::main(AppDelegateBridge *bridge)
 {
@@ -75,10 +76,25 @@ int Main::main(AppDelegateBridge *bridge)
             bridge->alert(errMsg);
         }
             
-        std::this_thread::sleep_for(std::chrono::seconds(60));
+        std::this_thread::sleep_for(nextUpdateTime(notifications.getNew()));
     }
     
     return 0;
+}
+
+std::chrono::minutes Main::nextUpdateTime(const Notifications newNotifications)
+{
+    std::chrono::minutes r = updateTime;
+    
+    if (updateTime.count() < MAX_UPDATE_TIME && newNotifications.size() == 0) {
+        updateTime++;
+    } else if (newNotifications.size() > 0) {
+        updateTime = std::chrono::minutes(INITIAL_UPDATE_TIME);
+    }
+    
+    std::cout << "Interval: " << r.count() << "m, next: " << updateTime.count() << "m" << std::endl;
+    
+    return r;
 }
 
 void Main::reauthenticate(void *data)

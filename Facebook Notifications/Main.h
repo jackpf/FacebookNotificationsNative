@@ -17,6 +17,9 @@
 #include "AccessTokenStorage.h"
 #include "FacebookException.h"
 
+#define INITIAL_UPDATE_TIME 1
+#define MAX_UPDATE_TIME     15
+
 class Main
 {
 private:
@@ -29,6 +32,10 @@ private:
     static std::string accessToken;
     static User user;
     static std::size_t readMessagesTime;
+    static std::chrono::minutes updateTime;
+    
+    Main();
+    static std::chrono::minutes nextUpdateTime(const Notifications);
     
 public:
     static int main(AppDelegateBridge *);
