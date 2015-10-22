@@ -9,13 +9,14 @@
 #include "Main.h"
 
 AppDelegateBridge   *Main::bridge;
-Request             *Main::request      = Request::getInstance();
-Parser              *Main::parser       = new Parser;
-ImageCache          *Main::cache        = new ImageCache;
-AccessTokenStorage  *Main::tokenStorage = AccessTokenStorage::getInstance();
+Request             *Main::request          = Request::getInstance();
+Parser              *Main::parser           = new Parser;
+ImageCache          *Main::cache            = new ImageCache;
+AccessTokenStorage  *Main::tokenStorage     = AccessTokenStorage::getInstance();
 Notifications       Main::notifications;
 std::string         Main::accessToken;
 User                Main::user;
+std::size_t         Main::readMessagesTime  = 0; // Should be persisted to file?
 
 int Main::main(AppDelegateBridge *bridge)
 {
@@ -43,7 +44,7 @@ int Main::main(AppDelegateBridge *bridge)
             parser->parseNotifications(&buffer, &notifications);
             
             request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
-            parser->parseUnreadMessages(&buffer, &notifications, user);
+            parser->parseUnreadMessages(&buffer, &notifications, readMessagesTime, user);
             
             Notifications newNotifications = notifications.getNew(), clearedNotifications = notifications.getCleared();
             
@@ -114,12 +115,13 @@ void Main::markNotificationsRead(void *data)
         }
     }
     
-    /* SHOULD UPDATE LAST UPDATE TIME FOR MESSAGES HERE */
-    
     notifications.reset();
     bridge->updateNotificationCount(0);
     
     request->mutex.unlock();
     
-    std::cout << "Marked " << i << " notifications as read" << std::endl;
+    // Update ignore messages time
+    readMessagesTime = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    
+    std::cout << "Marked " << i << " notifications as read, updated ignore message time to " << readMessagesTime << std::endl;
 }

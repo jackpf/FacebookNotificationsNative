@@ -51,7 +51,7 @@ void Parser::parseNotifications(std::stringstream *json, Notifications *data) th
     }
 }
 
-void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, User forUser) throw(FacebookDefaultException *, std::runtime_error)
+void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, std::time_t tSince, User forUser) throw(FacebookDefaultException *, std::runtime_error)
 {
     boost::property_tree::ptree pt;
     parseJson(json, &pt);
@@ -59,14 +59,14 @@ void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, U
     BOOST_FOREACH(boost::property_tree::ptree::value_type &v, pt.get_child("data")) {
         Notification notification;
         
-        //std::time_t t = convertDate(v.second.get<std::string>("updated_time").data());
+        std::time_t t = convertDate(v.second.get<std::string>("updated_time").data());
         int unreadCount = v.second.get<int>("unread");
         
         if (unreadCount == 0) {
             continue;
         }
         
-        //if (t > tSince) {
+        if (t > tSince) {
             size_t commentCount = v.second.get_child("comments").count("data"), i = 1;
         
             BOOST_FOREACH(boost::property_tree::ptree::value_type &c, v.second.get_child("comments.data")) {
@@ -86,9 +86,9 @@ void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, U
             notification.type = NotificationType::MESSAGE;
                 
             data->push_back(notification);
-        //} else {
-        //    break;
-        //}
+        } else {
+            break;
+        }
     }
 }
 

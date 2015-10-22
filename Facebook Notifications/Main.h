@@ -28,6 +28,7 @@ private:
     static Notifications notifications;
     static std::string accessToken;
     static User user;
+    static std::size_t readMessagesTime;
     
 public:
     static int main(AppDelegateBridge *);
