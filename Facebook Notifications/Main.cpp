@@ -18,6 +18,7 @@ std::string             Main::accessToken;
 User                    Main::user;
 std::size_t             Main::readMessagesTime  = 0; // Should be persisted to file?
 std::chrono::minutes    Main::updateTime        = std::chrono::minutes(INITIAL_UPDATE_TIME);
+std::mutex              Main::updateMutex;
 
 int Main::main(AppDelegateBridge *bridge)
 {
@@ -33,18 +34,20 @@ int Main::main(AppDelegateBridge *bridge)
     
     while (true) {
         try {
+            std::lock_guard<std::mutex> lock(updateMutex);
+            
             if (user.id.empty()) {
                 std::cout << "Loading user data" << std::endl;
-                request->request("/me", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
+                request->request("/me", Request::Params{Request::Param("access_token", accessToken)}, &buffer);
                 parser->parseUser(&buffer, &user);
             }
             
             notifications.reset();
             
-            request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
+            request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer);
             parser->parseNotifications(&buffer, &notifications);
             
-            request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
+            request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer);
             parser->parseUnreadMessages(&buffer, &notifications, readMessagesTime, user);
             
             Notifications newNotifications = notifications.getNew(), clearedNotifications = notifications.getCleared();
@@ -113,12 +116,14 @@ void Main::reauthenticate(void *data)
 
 void Main::markNotificationRead(void *data)
 {
-    request->request("/" + *static_cast<std::string *>(data), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr, true);
+    std::lock_guard<std::mutex> lock(updateMutex);
+    
+    request->request("/" + *static_cast<std::string *>(data), Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
 }
 
 void Main::markNotificationsRead(void *data)
 {
-    request->mutex.lock();
+    std::lock_guard<std::mutex> lock(updateMutex);
     
     int i = 0;
     
@@ -126,15 +131,13 @@ void Main::markNotificationsRead(void *data)
         auto notification = static_cast<Notification>(*it);
         
         if (notification.type == NotificationType::NOTIFICATION) {
-            request->request("/" + notification.id, Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr, false /*no auto lock*/);
+            request->request("/" + notification.id, Request::Params{Request::Param("unread", "false"), Request::Param("access_token", accessToken)}, true, nullptr);
             i++;
         }
     }
     
     notifications.reset();
     bridge->updateNotificationCount(0);
-    
-    request->mutex.unlock();
     
     // Update ignore messages time
     readMessagesTime = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();

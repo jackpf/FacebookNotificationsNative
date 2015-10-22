@@ -11,6 +11,7 @@
 
 #include <thread>
 #include <chrono>
+#include <mutex>
 #include "AppDelegateBridge.h"
 #include "Parser.h"
 #include "ImageCache.h"
@@ -33,6 +34,7 @@ private:
     static User user;
     static std::size_t readMessagesTime;
     static std::chrono::minutes updateTime;
+    static std::mutex updateMutex;
     
     Main();
     static std::chrono::minutes nextUpdateTime(const Notifications);

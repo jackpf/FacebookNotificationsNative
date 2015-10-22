@@ -14,7 +14,6 @@
 #include <exception>
 #include <sstream>
 #include <vector>
-#include <mutex>
 #include "curlcpp/curl_easy.h"
 #include "Data.h"
 
@@ -29,13 +28,11 @@ public:
     typedef std::pair<std::string, std::string> Param;
     typedef std::vector<Param> Params;
     
-    static std::mutex mutex;
-    
     ~Request();
     static Request *getInstance();
-    void request(const std::string, Params, bool, std::ostream *, bool) throw(std::runtime_error);
-    void request(const std::string, std::ostream *, bool) throw(std::runtime_error);
-    void request(const std::string, Params, std::ostream *, bool) throw(std::runtime_error);
+    void request(const std::string, Params, bool, std::ostream *) throw(std::runtime_error);
+    void request(const std::string, std::ostream *) throw(std::runtime_error);
+    void request(const std::string, Params, std::ostream *) throw(std::runtime_error);
 };
 
 #endif /* defined(__Facebook_Notifications__Request__) */

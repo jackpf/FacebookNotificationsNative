@@ -42,7 +42,7 @@ void ImageCache::cache(const std::string userId)
     std::string filename = getFilename(userId);
     std::fstream picture(filename, std::ios::out | std::ios::binary);
     
-    Request::getInstance()->request("/" + userId + "/picture", Request::Params{Request::Param("width", "128"), Request::Param("height", "128")}, false, &picture, false /*don't really need locking here*/);
+    Request::getInstance()->request("/" + userId + "/picture", Request::Params{Request::Param("width", "128"), Request::Param("height", "128")}, false, &picture);
     
     picture.close();
 }

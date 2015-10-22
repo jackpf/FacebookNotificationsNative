@@ -63,7 +63,7 @@ std::string AccessTokenStorage::getAccessTokenFromCode(std::string code) throw(F
 {
     std::stringstream buffer;
     
-    Request::getInstance()->request("/oauth/access_token", Request::Params{Request::Param("client_id", CLIENT_ID), Request::Param("client_secret", CLIENT_SECRET), Request::Param("redirect_uri", REDIRECT_URI), Request::Param("code", code)}, &buffer, false);
+    Request::getInstance()->request("/oauth/access_token", Request::Params{Request::Param("client_id", CLIENT_ID), Request::Param("client_secret", CLIENT_SECRET), Request::Param("redirect_uri", REDIRECT_URI), Request::Param("code", code)}, &buffer);
     
     std::regex rgx("access_token=(\\w+)");
     std::smatch match;

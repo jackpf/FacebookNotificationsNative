@@ -8,7 +8,6 @@
 
 #include "Request.h"
 
-std::mutex Request::mutex;
 Request *Request::self;
 
 static size_t write_callback(char *ptr, size_t size, size_t nmemb, std::ostream *userdata)
@@ -44,12 +43,8 @@ Request::~Request()
     }
 }
 
-void Request::request(const std::string path, Params params, bool post, std::ostream *response, bool autoMutex) throw(std::runtime_error)
+void Request::request(const std::string path, Params params, bool post, std::ostream *response) throw(std::runtime_error)
 {
-    if (autoMutex) {
-        std::lock_guard<std::mutex> lock(mutex);
-    }
-    
     CURL *ch;
     CURLcode res;
     
@@ -82,12 +77,12 @@ void Request::request(const std::string path, Params params, bool post, std::ost
     curl_easy_cleanup(ch);
 }
 
-void Request::request(const std::string path, std::ostream *response, bool autoMutex) throw(std::runtime_error)
+void Request::request(const std::string path, std::ostream *response) throw(std::runtime_error)
 {
-    request(path, Params(), false, response, autoMutex);
+    request(path, Params(), false, response);
 }
 
-void Request::request(const std::string path, Params params, std::ostream *response, bool autoMutex) throw(std::runtime_error)
+void Request::request(const std::string path, Params params, std::ostream *response) throw(std::runtime_error)
 {
-    request(path, params, false, response, autoMutex);
+    request(path, params, false, response);
 }
