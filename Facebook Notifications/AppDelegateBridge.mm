@@ -153,6 +153,15 @@
     [NSUserNotificationCenter.defaultUserNotificationCenter deliverNotification:notification];
 }
 
+- (void) clearNotifications :(NSArray *)notificationIds
+{
+    for(NSUserNotification *notification in NSUserNotificationCenter.defaultUserNotificationCenter.deliveredNotifications) {
+        if ([notificationIds containsObject:notification.identifier]) {
+            [NSUserNotificationCenter.defaultUserNotificationCenter removeDeliveredNotification:notification];
+        }
+    }
+}
+
 - (void) getInput :(NSString *) prompt :(NSString **) r
 {
     NSAlert *alert = [NSAlert alertWithMessageText: prompt
@@ -216,6 +225,20 @@ void AppDelegateBridge::notify(std::string identifier, std::string title, std::s
 void AppDelegateBridge::updateNotificationCount(size_t count)
 {
     [bridge updateNotificationCount:count];
+}
+
+void AppDelegateBridge::clearNotifications(Notifications notifications)
+{
+    
+    NSMutableArray *notificationIds = [[NSMutableArray alloc] init];
+    
+    int i = 0;
+    for(Notifications::iterator it = notifications.begin(); it != notifications.end(); ++it) {
+        notificationIds[i] = [NSString stringWithUTF8String:static_cast<Notification>(*it).id.c_str()];
+        i++;
+    }
+    
+    [bridge clearNotifications:notificationIds];
 }
 
 std::string AppDelegateBridge::getInput(std::string prompt)

@@ -38,6 +38,7 @@ public:
     void reset();
     bool containsNotification(Notification);
     Notifications getNew();
+    Notifications getCleared();
 };
 
 #endif /* defined(__Facebook_Notifications__Notifications__) */

@@ -45,9 +45,9 @@ int Main::main(AppDelegateBridge *bridge)
             request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
             parser->parseUnreadMessages(&buffer, &notifications, user);
             
-            Notifications newNotifications = notifications.getNew();
+            Notifications newNotifications = notifications.getNew(), clearedNotifications = notifications.getCleared();
             
-            std::cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new" << std::endl;
+            std::cout << "Found " << notifications.size() << " notifications, " << newNotifications.size() << " new, " << clearedNotifications.size() << " cleared" << std::endl;
             
             bridge->updateNotificationCount(notifications.size());
             
@@ -56,6 +56,8 @@ int Main::main(AppDelegateBridge *bridge)
                 
                 bridge->notify(notification.id, notification.title, notification.body, notification.link, cache->fetch(notification.from));
             }
+            
+            bridge->clearNotifications(clearedNotifications);
         } catch (const FacebookDefaultException *e) {
             if (auto real = dynamic_cast<const FacebookAuthenticationException *>(e)) {
                 std::cout << "Login error: " << real->what() << std::endl;

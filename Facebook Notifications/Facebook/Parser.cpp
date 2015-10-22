@@ -73,8 +73,8 @@ void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, U
                 if (i == commentCount) {
                     notification.from = c.second.get_child("from.id").data();
                     notification.title = c.second.get_child("from.name").data();
-                    boost::optional<boost::property_tree::ptree&> chil = c.second.get_child_optional("message");
-                    if (chil) {
+                    boost::optional<boost::property_tree::ptree&> child = c.second.get_child_optional("message");
+                    if (child) {
                         notification.body = c.second.get_child("message").data();
                     }
                 }

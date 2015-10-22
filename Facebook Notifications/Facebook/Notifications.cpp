@@ -42,3 +42,18 @@ Notifications Notifications::getNew()
     
     return newNotifications;
 }
+
+Notifications Notifications::getCleared()
+{
+    Notifications readNotifications;
+    
+    for(iterator it = oldNotifications->begin(); it != oldNotifications->end(); ++it) {
+        auto notification = static_cast<Notification>(*it);
+        
+        if (!containsNotification(notification)) {
+            readNotifications.push_back(notification);
+        }
+    }
+    
+    return readNotifications;
+}

@@ -16,6 +16,7 @@
 #include <thread>
 #import <WebKit/WebKit.h>
 #include "Data.h"
+#include "Notifications.h"
 
 class AppDelegateBridge;
 
@@ -41,6 +42,7 @@ class AppDelegateBridge;
 - (void) getInput :(NSString *)prompt :(NSString **) r;
 - (void) alert :(NSString *)prompt;
 - (void) markNotificationsRead;
+- (void) clearNotifications :(NSArray *)notificationIds;
 - (void) exit;
 
 @end
@@ -57,6 +59,7 @@ public:
     void setBridge(AppDelegateBridgeNative *);
     void updateNotificationCount(size_t);
     void notify(std::string, std::string, std::string, std::string, std::string = "");
+    void clearNotifications(Notifications);
     std::string getInput(std::string);
     void alert(std::string);
     std::string retrieveAuthenticationCode();
