@@ -20,7 +20,7 @@ bool Notifications::containsNotification(Notification notificationToFind)
     for(iterator it = begin(); it != end(); ++it) {
         auto notification = static_cast<Notification>(*it);
         
-        if (notification.id.compare(notificationToFind.id) == 0 && notification.updatedAt != notificationToFind.updatedAt) {
+        if (notification.id.compare(notificationToFind.id) == 0 && notification.updatedAt == notificationToFind.updatedAt) {
             return true;
         }
     }

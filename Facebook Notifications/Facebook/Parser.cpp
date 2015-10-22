@@ -36,8 +36,6 @@ void Parser::parseNotifications(std::stringstream *json, Notifications *data) th
     boost::property_tree::ptree pt;
     parseJson(json, &pt);
     
-    data->reset();
-    
     BOOST_FOREACH(boost::property_tree::ptree::value_type &v, pt.get_child("data")) {
         Notification notification;
         
@@ -53,7 +51,7 @@ void Parser::parseNotifications(std::stringstream *json, Notifications *data) th
     }
 }
 
-void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, std::time_t tSince, User forUser) throw(FacebookDefaultException *, std::runtime_error)
+void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, User forUser) throw(FacebookDefaultException *, std::runtime_error)
 {
     boost::property_tree::ptree pt;
     parseJson(json, &pt);
@@ -61,33 +59,36 @@ void Parser::parseUnreadMessages(std::stringstream *json, Notifications *data, s
     BOOST_FOREACH(boost::property_tree::ptree::value_type &v, pt.get_child("data")) {
         Notification notification;
         
-        std::time_t t = convertDate(v.second.get<std::string>("updated_time").data());
+        //std::time_t t = convertDate(v.second.get<std::string>("updated_time").data());
         int unreadCount = v.second.get<int>("unread");
         
         if (unreadCount == 0) {
             continue;
         }
         
-        if (t > tSince) {
-            boost::property_tree::ptree users = v.second.get_child("to.data");
-            
-            BOOST_FOREACH(boost::property_tree::ptree::value_type &u, users) {
-                if (forUser.id.compare(u.second.get_child("id").data()) != 0) {
-                    notification.from = u.second.get_child("id").data();
-                    notification.title = u.second.get_child("name").data();
+        //if (t > tSince) {
+            size_t commentCount = v.second.get_child("comments").count("data"), i = 1;
+        
+            BOOST_FOREACH(boost::property_tree::ptree::value_type &c, v.second.get_child("comments.data")) {
+                if (i == commentCount) {
+                    notification.from = c.second.get_child("from.id").data();
+                    notification.title = c.second.get_child("from.name").data();
+                    boost::optional<boost::property_tree::ptree&> chil = c.second.get_child_optional("message");
+                    if (chil) {
+                        notification.body = c.second.get_child("message").data();
+                    }
                 }
             }
-            
+        
             notification.id = v.second.get_child("id").data();
-            notification.body = "New message!";
-            notification.link = "";
+            notification.link = "https://www.facebook.com/messages/" + notification.id;
             notification.updatedAt = convertDate(v.second.get_child("updated_time").data());
             notification.type = NotificationType::MESSAGE;
                 
             data->push_back(notification);
-        } else {
-            break;
-        }
+        //} else {
+        //    break;
+        //}
     }
 }
 

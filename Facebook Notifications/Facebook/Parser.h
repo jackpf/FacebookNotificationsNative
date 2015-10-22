@@ -29,7 +29,7 @@ private:
     
 public:
     void parseNotifications(std::stringstream *, Notifications *) throw(FacebookDefaultException *, std::runtime_error);
-    void parseUnreadMessages(std::stringstream *, Notifications *, std::time_t, User) throw(FacebookDefaultException *, std::runtime_error);
+    void parseUnreadMessages(std::stringstream *, Notifications *, User) throw(FacebookDefaultException *, std::runtime_error);
     void parseUser(std::stringstream *, User *) throw(FacebookDefaultException *, std::runtime_error);
 };
 

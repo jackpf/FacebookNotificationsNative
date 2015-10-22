@@ -37,11 +37,13 @@ int Main::main(AppDelegateBridge *bridge)
                 parser->parseUser(&buffer, &user);
             }
             
+            notifications.reset();
+            
             request->request("/me/notifications", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
             parser->parseNotifications(&buffer, &notifications);
             
-            //request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
-            //parser->parseUnreadMessages(&buffer, &notifications, 1444867200, user);
+            request->request("/me/inbox", Request::Params{Request::Param("access_token", accessToken)}, &buffer, true);
+            parser->parseUnreadMessages(&buffer, &notifications, user);
             
             Notifications newNotifications = notifications.getNew();
             
@@ -49,7 +51,7 @@ int Main::main(AppDelegateBridge *bridge)
             
             bridge->updateNotificationCount(notifications.size());
             
-            for(Notifications::iterator it = newNotifications.begin(); it != newNotifications.end(); ++it) {
+            for(Notifications::reverse_iterator it = newNotifications.rbegin(); it != newNotifications.rend(); ++it) {
                 auto notification = static_cast<Notification>(*it);
                 
                 bridge->notify(notification.id, notification.title, notification.body, notification.link, cache->fetch(notification.from));
