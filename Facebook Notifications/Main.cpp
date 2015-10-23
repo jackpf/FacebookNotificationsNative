@@ -30,11 +30,11 @@ int Main::main(AppDelegateBridge *bridge)
     std::cout << "Pruned " << cache->prune() << " cached images" << std::endl;
     
     accessToken = tokenStorage->read();
-    std::stringstream buffer;
     
     while (true) {
         try {
             std::lock_guard<std::mutex> lock(updateMutex);
+            std::stringstream buffer;
             
             if (user.id.empty()) {
                 std::cout << "Loading user data" << std::endl;
