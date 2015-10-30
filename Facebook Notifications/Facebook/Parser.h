@@ -20,6 +20,7 @@
 #include "Notifications.h"
 #include "FacebookException.h"
 #include "User.h"
+#include <unordered_map>
 
 class Parser
 {
@@ -29,7 +30,7 @@ private:
     
 public:
     void parseNotifications(std::stringstream *, Notifications *) throw(FacebookDefaultException *, std::runtime_error);
-    void parseUnreadMessages(std::stringstream *, Notifications *, std::time_t, User) throw(FacebookDefaultException *, std::runtime_error);
+    void parseUnreadMessages(std::stringstream *, Notifications *, std::unordered_map<std::string, std::time_t>, User) throw(FacebookDefaultException *, std::runtime_error);
     void parseUser(std::stringstream *, User *) throw(FacebookDefaultException *, std::runtime_error);
 };
 

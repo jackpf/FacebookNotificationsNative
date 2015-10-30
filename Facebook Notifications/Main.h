@@ -17,9 +17,10 @@
 #include "ImageCache.h"
 #include "AccessTokenStorage.h"
 #include "FacebookException.h"
+#include <unordered_map>
 
 #define INITIAL_UPDATE_TIME 1
-#define MAX_UPDATE_TIME     15
+#define MAX_UPDATE_TIME     5
 
 class Main
 {
@@ -32,7 +33,7 @@ private:
     static Notifications notifications;
     static std::string accessToken;
     static User user;
-    static std::size_t readMessagesTime;
+    static std::unordered_map<std::string, std::time_t> readMessages;
     static std::chrono::minutes updateTime;
     static std::mutex updateMutex;
     
