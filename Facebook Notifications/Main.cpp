@@ -76,7 +76,7 @@ int Main::main(AppDelegateBridge *bridge)
         } catch (const std::runtime_error &e) {
             std::string errMsg = std::string("Runtime error: ") + e.what();
             std::cout << errMsg << std::endl;
-            bridge->alert(errMsg);
+            //bridge->alert(errMsg);
         }
             
         std::this_thread::sleep_for(nextUpdateTime(notifications.getNew()));

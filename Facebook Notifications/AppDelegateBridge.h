@@ -20,7 +20,7 @@
 
 class AppDelegateBridge;
 
-@interface AppDelegateBridgeNative : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate>
+@interface AppDelegateBridgeNative : NSObject <NSApplicationDelegate, NSUserNotificationCenterDelegate, WebFrameLoadDelegate>
 
 @property (nonatomic) AppDelegateBridge *bridge;
 @property (strong, nonatomic) NSStatusItem *statusBar;
